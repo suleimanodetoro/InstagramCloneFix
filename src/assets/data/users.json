@@ -1,0 +1,26 @@
+[
+  {
+    "id": "u1",
+    "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg",
+    "username": "vadimnotjustdev",
+    "name": "Suleiman"
+  },
+  {
+    "id": "u2",
+    "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/2.jpg",
+    "username": "notkenny_",
+    "name": "Kehinde"
+  },
+  {
+    "id": "u3",
+    "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/3.jpg",
+    "username": "aishaodetoro",
+    "name": "Aisha"
+  },
+  {
+    "id": "u4",
+    "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/4.jpg",
+    "username": "sonikiomoakin",
+    "name": "Sodiq"
+  }
+]

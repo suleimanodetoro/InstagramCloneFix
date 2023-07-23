@@ -1,0 +1,102 @@
+[
+  {
+    "id": "1",
+    "comment": "Amazing shot! Love the composition and colors. Keep up the great work!",
+    "user": {
+      "id": "100",
+      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg",
+      "username": "wanderlust"
+    }
+  },
+  {
+    "id": "2",
+    "comment": "This is breathtaking! The scenery is absolutely stunning. I wish I could be there!",
+    "user": {
+      "id": "200",
+      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/2.jpg",
+      "username": "adventuregram"
+    }
+  },
+  {
+    "id": "3",
+    "comment": "Your photos always inspire me. I love how you capture the beauty in the simplest moments.",
+    "user": {
+      "id": "300",
+      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/3.jpg",
+      "username": "naturelover"
+    }
+  },
+  {
+    "id": "4",
+    "comment": "Absolutely mesmerizing! This photo evokes so much emotion. You're incredibly talented!",
+    "user": {
+      "id": "400",
+      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/4.jpg",
+      "username": "photoholic"
+    }
+  },
+  {
+    "id": "5",
+    "comment": "Wow! I can't get enough of your feed. Every photo is a work of art. Keep it coming!",
+    "user": {
+      "id": "500",
+      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg",
+      "username": "visualsociety"
+    }
+  },
+  {
+    "id": "6",
+    "comment": "Your creativity knows no bounds. This is next-level photography. Absolutely love it!",
+    "user": {
+      "id": "600",
+      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/2.jpg",
+      "username": "artistic_eye"
+    }
+  },
+  {
+    "id": "7",
+    "comment": "I'm speechless. This photo tells a story and it's incredibly captivating. Keep shining!",
+    "user": {
+      "id": "700",
+      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/3.jpg",
+      "username": "storyteller"
+    }
+  },
+  {
+    "id": "8",
+    "comment": "You have such a unique perspective. Your photos always leave me in awe. Keep it up!",
+    "user": {
+      "id": "800",
+      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/4.jpg",
+      "username": "perspective_guru"
+    }
+  },
+  {
+    "id": "9",
+    "comment": "Incredible shot! The details and clarity are on point. You're definitely raising the bar!",
+    "user": {
+      "id": "900",
+      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg",
+      "username": "shutterbug"
+    }
+  },
+  {
+    "id": "10",
+    "comment": "This photo deserves all the awards. Your talent shines through every frame. Absolutely stunning!",
+    "user": {
+      "id": "1000",
+      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/2.jpg",
+      "username": "picperfection"
+    }
+  },
+  {
+    "id": "11",
+    "comment": "I'm blown away by your photography skills. This shot is pure magic. Can't wait to see more!",
+    "user": {
+      "id": "1100",
+      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/3.jpg",
+      "username": "capturesoul"
+    }
+  }
+]
+

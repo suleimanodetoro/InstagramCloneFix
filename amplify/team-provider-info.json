@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplifycfd6cc9716104-staging-70333-authRole",
+      "UnauthRoleArn": "arn:aws:iam::556524450848:role/amplify-amplifycfd6cc9716104-staging-70333-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::556524450848:role/amplify-amplifycfd6cc9716104-staging-70333-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-amplifycfd6cc9716104-staging-70333-deployment",
+      "UnauthRoleName": "amplify-amplifycfd6cc9716104-staging-70333-unauthRole",
+      "StackName": "amplify-amplifycfd6cc9716104-staging-70333",
+      "StackId": "arn:aws:cloudformation:eu-west-2:556524450848:stack/amplify-amplifycfd6cc9716104-staging-70333/8bd50d70-2214-11ee-8eed-0a1f03d7e8a8",
+      "AmplifyAppId": "d357uj4uqkyhr3"
+    },
+    "categories": {
+      "auth": {
+        "instagram": {}
+      }
+    }
+  }
+}
