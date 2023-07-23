@@ -14,7 +14,6 @@ type HubEventData = {
 type UserType = CognitoUser | undefined | null;
 type AuthContextType = {
     user: UserType,
-    setUser: React.Dispatch<React.SetStateAction<UserType>>,
 }
 
 
@@ -28,19 +27,20 @@ const AuthContext = createContext<AuthContextType>({ user: undefined, setUser: (
 
 const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<UserType>(undefined);
+    const checkUser = async () => {
+        //Check if user is authenticated 
+        try {
+            const authUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+            setUser(authUser)
+
+        } catch (error) {
+            setUser(null);
+        }
+    }
     //when the application is opened, check the Auth library local storage for the last authenticated user.
     // If authenticated user exists, let the user log in
     useEffect(() => {
-        const checkUser = async () => {
-            //Check if user is authenticated 
-            try {
-                const authUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
-                setUser(authUser)
-
-            } catch (error) {
-                setUser(null);
-            }
-        }
+        
         checkUser();
     }, []);
 
@@ -51,7 +51,9 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
             if (event === 'signOut') {
                 setUser(null);
             }
-
+            if (event === 'signIn') {
+                checkUser();
+            }
         };
         //Hub will receive events fir almost everything you do with auth now
         const hubListener = Hub.listen('auth', listener)
@@ -65,7 +67,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     console.log('usr', user);
 
     return (
-        <AuthContext.Provider value={{ user, setUser }}>
+        <AuthContext.Provider value={{ user }}>
             {children}
         </AuthContext.Provider>
     )

@@ -11,7 +11,8 @@ import { Authenticator, ThemeProvider } from '@aws-amplify/ui-react-native';
 import config from './src/aws-exports';
 import { PasswordField } from '@aws-amplify/ui-react-native/dist/primitives';
 import AuthContextProvider from './src/contexts/AuthContext';
-
+//Because some changes made weren't reflected, we'll do the following=>
+const updatedConfig = {...config, oauth:{...config.oauth, redirectSignIn:'instagram:://', redirectSignOut:'instagram://'}}
 Amplify.configure(config);
 
 

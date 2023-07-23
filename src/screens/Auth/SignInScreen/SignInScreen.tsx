@@ -15,7 +15,6 @@ import { useForm } from 'react-hook-form';
 import { SignInNavigationProp } from '../../../types/navigation';
 import { Auth } from 'aws-amplify';
 import { useState } from 'react';
-import {useAuthContext} from "../../../contexts/AuthContext"
 
 
 type SignInData = {
@@ -29,7 +28,6 @@ const SignInScreen = () => {
   const [loading, setLoading] = useState(false)
   const { control, handleSubmit, reset } = useForm<SignInData>();
   //Access context
-  const {setUser} = useAuthContext();
 
   const onSignInPressed = async ({username,password}: SignInData) => {
  
@@ -38,9 +36,7 @@ const SignInScreen = () => {
     }
     setLoading(true)
     try {
-      const cognitoUser = await Auth.signIn(username, password);
-      setUser(cognitoUser);
-
+      await Auth.signIn(username, password);
     } catch (error) {
       console.log('errorrrr');
       
