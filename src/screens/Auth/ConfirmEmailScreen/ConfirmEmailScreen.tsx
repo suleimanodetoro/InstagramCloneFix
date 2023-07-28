@@ -51,12 +51,19 @@ const ConfirmEmailScreen = () => {
   };
 
   const onResendPress = async () => {
+    if (loading) {
+      return;     
+    }
+    setLoading(true);
     try {
       await Auth.resendSignUp(usr);
       
     } catch (error) {
       Alert.alert('Darn digiddy dong!', (error as Error).message)
       
+    } finally{
+      setLoading(false);
+
     }
   };
 
