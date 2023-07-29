@@ -12,12 +12,13 @@ import { IPost } from '../../types/models';
 import DoublePressable from '../DoublePressable/';
 import Carousel from '../Carousel/Carousel';
 import VideoPlayer from '../VideoPlayer/VideoPlayer';
+import {Post} from '../../API'
 
 //import hook to enable naviagtion functionality 
 import { useNavigation } from '@react-navigation/native';
 import { FeedNavigationProp } from '../../types/navigation';
 interface IFeedPost {
-  post: IPost;
+  post: Post;
   isVisible: boolean;
 }
 
@@ -39,15 +40,15 @@ const FeedPost = (props: IFeedPost) => {
 
   const naviagtion = useNavigation<FeedNavigationProp>();
   const navigateToUser = () => {
-    naviagtion.navigate('UserProfile', { userId: post.user.id });
-
+    if (post.User){
+      naviagtion.navigate('UserProfile', { userId: post.User.id });
+    }
   }
 
   const navigateToComments = () => {
-    naviagtion.navigate('Comments', { postId: post.user.id })
+      naviagtion.navigate('Comments', { postId: post.id })
+    
   }
-
-
 
   let content = null;
   if (post.image) {
@@ -55,7 +56,7 @@ const FeedPost = (props: IFeedPost) => {
       <DoublePressable onDoublePress={toggleLikeState}>
         <Image
           source={{
-            uri: post.image,
+            uri: post.User?.image,
           }}
           style={styles.image}
         />

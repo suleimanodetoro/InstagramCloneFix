@@ -24,6 +24,36 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "User": {
+                    "name": "User",
+                    "isArray": false,
+                    "type": {
+                        "model": "User"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "userID"
+                        ]
+                    }
+                },
+                "Post": {
+                    "name": "Post",
+                    "isArray": false,
+                    "type": {
+                        "model": "Post"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "postID"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -114,6 +144,36 @@ export const schema = {
                     "type": "ID",
                     "isRequired": true,
                     "attributes": []
+                },
+                "User": {
+                    "name": "User",
+                    "isArray": false,
+                    "type": {
+                        "model": "User"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "userID"
+                        ]
+                    }
+                },
+                "Post": {
+                    "name": "Post",
+                    "isArray": false,
+                    "type": {
+                        "model": "Post"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "postID"
+                        ]
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -235,6 +295,21 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "User": {
+                    "name": "User",
+                    "isArray": false,
+                    "type": {
+                        "model": "User"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "userID"
+                        ]
+                    }
+                },
                 "Likes": {
                     "name": "Likes",
                     "isArray": true,
@@ -247,7 +322,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "postID"
+                            "Post"
                         ]
                     }
                 },
@@ -263,7 +338,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "postID"
+                            "Post"
                         ]
                     }
                 },
@@ -403,7 +478,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "userID"
+                            "User"
                         ]
                     }
                 },
@@ -419,7 +494,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "userID"
+                            "User"
                         ]
                     }
                 },
@@ -435,7 +510,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "userID"
+                            "User"
                         ]
                     }
                 },
@@ -485,5 +560,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "edb3cd780630f6e0060bc37ca88d20ab"
+    "version": "a75f5e52c03f367d25176edd572d9db3"
 };

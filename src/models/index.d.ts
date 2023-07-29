@@ -1,6 +1,6 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@aws-amplify/datastore";
 
 
 
@@ -14,6 +14,8 @@ type EagerLike = {
   readonly id: string;
   readonly userID: string;
   readonly postID: string;
+  readonly User?: User | null;
+  readonly Post?: Post | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -26,6 +28,8 @@ type LazyLike = {
   readonly id: string;
   readonly userID: string;
   readonly postID: string;
+  readonly User: AsyncItem<User | undefined>;
+  readonly Post: AsyncItem<Post | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -45,6 +49,8 @@ type EagerComment = {
   readonly comment?: string | null;
   readonly userID: string;
   readonly postID: string;
+  readonly User?: User | null;
+  readonly Post?: Post | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -58,6 +64,8 @@ type LazyComment = {
   readonly comment?: string | null;
   readonly userID: string;
   readonly postID: string;
+  readonly User: AsyncItem<User | undefined>;
+  readonly Post: AsyncItem<Post | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -81,6 +89,7 @@ type EagerPost = {
   readonly nOfComments: number;
   readonly nOfLikes: number;
   readonly userID: string;
+  readonly User?: User | null;
   readonly Likes?: (Like | null)[] | null;
   readonly Comments?: (Comment | null)[] | null;
   readonly createdAt?: string | null;
@@ -100,6 +109,7 @@ type LazyPost = {
   readonly nOfComments: number;
   readonly nOfLikes: number;
   readonly userID: string;
+  readonly User: AsyncItem<User | undefined>;
   readonly Likes: AsyncCollection<Like>;
   readonly Comments: AsyncCollection<Comment>;
   readonly createdAt?: string | null;

@@ -7,12 +7,75 @@ import {
   View,
   ViewabilityConfig, ViewToken,SafeAreaView, StatusBar
 } from 'react-native';
-import React,{useRef,useState} from 'react';
+import React,{useRef,useState, useEffect} from 'react';
 import FeedPost from '../../components/FeedPost/FeedPost';
-import posts from '../../assets/data/posts.json';
+import { listPosts } from '../../graphql/queries';
+import {graphqlOperation, API} from 'aws-amplify';
+
+export const listPosts = /* GraphQL */ `
+  query ListPosts(
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        description
+        image
+        video
+        images
+        nOfComments
+        nOfLikes
+        userID
+        User {
+          id
+          name
+          username
+          image
+        }
+        Comments {
+          id
+          comment
+          User {
+            id
+            name
+            username
+          }
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
 
 const HomeScreen = (props) => {
-  const [activePostId, setActivePostId] = useState < string | null > (null)
+  const [activePostId, setActivePostId] = useState < string | null > (null);
+  //state variable to store post data requested from database
+  const [posts, setPosts] = useState(null)
+  // graphql request to query database
+
+  const fetchPost = async () =>{
+    const response = await API.graphql(graphqlOperation(listPosts));
+    setPosts(response.data.listPosts)
+
+  }
+
+  useEffect(() => {
+    fetchPost();
+  }, []);
+  
+
+
+
   const viewabilityConfig: ViewabilityConfig = {
     itemVisiblePercentThreshold: 55, // do x when component is 50% visible
   };
