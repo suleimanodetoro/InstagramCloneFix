@@ -410,15 +410,8 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "email": {
-                    "name": "email",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "username": {
-                    "name": "username",
+                "image": {
+                    "name": "image",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -431,6 +424,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "username": {
+                    "name": "username",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "website": {
                     "name": "website",
                     "isArray": false,
@@ -438,8 +438,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "nOfFollowing": {
-                    "name": "nOfFollowing",
+                "nOfFollowings": {
+                    "name": "nOfFollowings",
                     "isArray": false,
                     "type": "Int",
                     "isRequired": true,
@@ -459,11 +459,11 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "image": {
-                    "name": "image",
+                "email": {
+                    "name": "email",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "Posts": {
@@ -560,5 +560,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "a75f5e52c03f367d25176edd572d9db3"
+    "version": "32d97a0b37fe1b61718cbe0af51fb316"
 };

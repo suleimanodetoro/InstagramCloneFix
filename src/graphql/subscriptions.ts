@@ -11,14 +11,14 @@ export const onCreateLike = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -60,14 +60,14 @@ export const onUpdateLike = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -109,14 +109,14 @@ export const onDeleteLike = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -159,14 +159,14 @@ export const onCreateComment = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -209,14 +209,14 @@ export const onUpdateComment = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -259,14 +259,14 @@ export const onDeleteComment = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -313,14 +313,14 @@ export const onCreatePost = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -361,14 +361,14 @@ export const onUpdatePost = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -409,14 +409,14 @@ export const onDeletePost = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -448,14 +448,14 @@ export const onCreateUser = /* GraphQL */ `
     onCreateUser(filter: $filter) {
       id
       name
-      email
-      username
+      image
       bio
+      username
       website
-      nOfFollowing
+      nOfFollowings
       nOfFollowers
       nOfPosts
-      image
+      email
       Posts {
         nextToken
         startedAt
@@ -485,14 +485,14 @@ export const onUpdateUser = /* GraphQL */ `
     onUpdateUser(filter: $filter) {
       id
       name
-      email
-      username
+      image
       bio
+      username
       website
-      nOfFollowing
+      nOfFollowings
       nOfFollowers
       nOfPosts
-      image
+      email
       Posts {
         nextToken
         startedAt
@@ -522,14 +522,14 @@ export const onDeleteUser = /* GraphQL */ `
     onDeleteUser(filter: $filter) {
       id
       name
-      email
-      username
+      image
       bio
+      username
       website
-      nOfFollowing
+      nOfFollowings
       nOfFollowers
       nOfPosts
-      image
+      email
       Posts {
         nextToken
         startedAt

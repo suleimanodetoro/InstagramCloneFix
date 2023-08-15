@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import React,{useRef,useState, useEffect} from 'react';
 import FeedPost from '../../components/FeedPost/FeedPost';
-import { listPosts } from '../../graphql/queries';
 import {graphqlOperation, API} from 'aws-amplify';
 
 export const listPosts = /* GraphQL */ `
@@ -35,12 +34,14 @@ export const listPosts = /* GraphQL */ `
           image
         }
         Comments {
-          id
-          comment
-          User {
+          items {
             id
-            name
-            username
+            comment
+            User {
+              id
+              name
+              username
+            }
           }
         }
         createdAt
@@ -60,12 +61,12 @@ export const listPosts = /* GraphQL */ `
 const HomeScreen = (props) => {
   const [activePostId, setActivePostId] = useState < string | null > (null);
   //state variable to store post data requested from database
-  const [posts, setPosts] = useState(null)
+  const [posts, setPosts] = useState([])
   // graphql request to query database
 
-  const fetchPost = async () =>{
-    const response = await API.graphql(graphqlOperation(listPosts));
-    setPosts(response.data.listPosts)
+  const fetchPost = async() =>{    
+    const response = await API.graphql(graphqlOperation(listPosts));    
+    setPosts(response.data.listPosts.items)
 
   }
 
@@ -101,7 +102,7 @@ const HomeScreen = (props) => {
     <FlatList
       data={posts}
       renderItem={({item}) => <FeedPost post={item} isVisible={activePostId === item.id} />}
-      keyExtractor={item => `post-${item.createdAt}-${item.user.username}`}
+      keyExtractor={item => `post-${item.createdAt}-${item.User?.username}`}
       showsVerticalScrollIndicator={false}
       viewabilityConfig={viewabilityConfig}
       onViewableItemsChanged={onViewableItemsChanged.current}

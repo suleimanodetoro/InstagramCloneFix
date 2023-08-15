@@ -14,14 +14,14 @@ export const createLike = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -66,14 +66,14 @@ export const updateLike = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -118,14 +118,14 @@ export const deleteLike = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -171,14 +171,14 @@ export const createComment = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -224,14 +224,14 @@ export const updateComment = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -277,14 +277,14 @@ export const deleteComment = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -334,14 +334,14 @@ export const createPost = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -385,14 +385,14 @@ export const updatePost = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -436,14 +436,14 @@ export const deletePost = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -478,14 +478,14 @@ export const createUser = /* GraphQL */ `
     createUser(input: $input, condition: $condition) {
       id
       name
-      email
-      username
+      image
       bio
+      username
       website
-      nOfFollowing
+      nOfFollowings
       nOfFollowers
       nOfPosts
-      image
+      email
       Posts {
         nextToken
         startedAt
@@ -518,14 +518,14 @@ export const updateUser = /* GraphQL */ `
     updateUser(input: $input, condition: $condition) {
       id
       name
-      email
-      username
+      image
       bio
+      username
       website
-      nOfFollowing
+      nOfFollowings
       nOfFollowers
       nOfPosts
-      image
+      email
       Posts {
         nextToken
         startedAt
@@ -558,14 +558,14 @@ export const deleteUser = /* GraphQL */ `
     deleteUser(input: $input, condition: $condition) {
       id
       name
-      email
-      username
+      image
       bio
+      username
       website
-      nOfFollowing
+      nOfFollowings
       nOfFollowers
       nOfPosts
-      image
+      email
       Posts {
         nextToken
         startedAt

@@ -10,10 +10,11 @@ import React, {useState} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {size, weight} from '../../theme/fonts';
 import colors from '../../theme/colors';
-import {IComment} from '../../types/models';
+import { Comment as CommentType} from '../../API';
+import { DEFAULT_USER_IMAGE } from '../../config';
 
 interface ICommentProps {
-  comment: IComment;
+  comment: CommentType;
   includeDetails: boolean; //Track if detailed comment screen items should rendered, or just normal texts (this is the case in home screen)
 }
 
@@ -26,14 +27,14 @@ const Comment = ({comment, includeDetails = false}: ICommentProps) => {
     <View style={styles.comment}>
       {/* comment user avater */}
       {includeDetails && (
-        <Image source={{uri: comment.user.image}} style={styles.avater} />
+        <Image source={{uri: comment.User?.image || DEFAULT_USER_IMAGE}} style={styles.avater} />
       )}
 
       {/* MiddleColumn containing comment text and metadata */}
       <View style={styles.middleColumn}>
         {/* Comment text */}
         <Text style={styles.commentText}>
-          <Text style={styles.bold}>{comment.user.username}</Text>{' '}
+          <Text style={styles.bold}>{comment.User?.username}</Text>{' '}
           {comment.comment}
         </Text>
         {/* Comment MetaData inside Comment Text Column */}

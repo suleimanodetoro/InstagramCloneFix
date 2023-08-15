@@ -11,14 +11,14 @@ export const getLike = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -179,14 +179,14 @@ export const getComment = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -355,14 +355,14 @@ export const getPost = /* GraphQL */ `
       User {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -495,14 +495,14 @@ export const getUser = /* GraphQL */ `
     getUser(id: $id) {
       id
       name
-      email
-      username
+      image
       bio
+      username
       website
-      nOfFollowing
+      nOfFollowings
       nOfFollowers
       nOfPosts
-      image
+      email
       Posts {
         nextToken
         startedAt
@@ -537,14 +537,14 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
@@ -574,14 +574,14 @@ export const syncUsers = /* GraphQL */ `
       items {
         id
         name
-        email
-        username
+        image
         bio
+        username
         website
-        nOfFollowing
+        nOfFollowings
         nOfFollowers
         nOfPosts
-        image
+        email
         createdAt
         updatedAt
         _version
