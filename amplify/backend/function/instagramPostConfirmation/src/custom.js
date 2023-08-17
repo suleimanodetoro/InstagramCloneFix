@@ -23,27 +23,28 @@
  */
 
 //Get the env name and AppSync ID to construct the table name
-const env = process.env.API_INSTAGRAM_GRAPHQLAPIIDOUTPUT; //auto received from the lambda function-- you can check @ code source in aws lambda i think...
-const AppSyncID = "";
+const env = process.env.ENV; //auto received from the lambda function-- you can check @ code source in aws lambda i think...
+const AppSyncID = process.env.API_INSTAGRAM_GRAPHQLAPIIDOUTPUT;
 
 //This 'aws-sdk' will be automatically present in any environment that runs lambda functioins so you do not need to install it
-const AWS = require("aws-sdk");
+const { DynamoDBDocument } = require("@aws-sdk/lib-dynamodb"),
+  { DynamoDB } = require("@aws-sdk/client-dynamodb");
 
 //Get the table name to use in data storage for dynamo
 const TableName = `User-${AppSyncID}-${env}`;
 
 // The following varibale will be used to make interating with DynamoDB less stessful
-const docClient = new AWS.DynamoDB.DocumentClient();
+const docClient = DynamoDBDocument.from(new DynamoDB());
 
 //Function to check if user already exists
 const userExists = async (id) => {
   //Param to pass to docClient. Please refer to aws Dynamo Document Client documentation
   const params = {
     TableName: TableName,
-    key: id,
+    Key: id,
   };
   try {
-    const response = await docClient.get(params).promise();
+    const response = await docClient.get(params);
     return !!response?.Item;
   } catch (error) {
     console.log(error);
@@ -66,44 +67,46 @@ const saveUser = async (user) => {
     ...user,
     __typename: "User",
     createdAt: dateString,
+    updatedAt: dateString,
     _lastChangedAt: timestamp,
     _version: 1,
-    updatedAt: dateString,
   };
   const params = {
     TableName: TableName,
     Item,
   };
   try {
-    await docClient.put(params).promise();
+    await docClient.put(params);
+    console.log("User saved successfully");
   } catch (error) {
-    console.log(error);
+    console.log("Error saving user:", error);
   }
 }; // end of save user function
 
 // This code will be called everytime your user is confirmed:
 exports.handler = async (event, context) => {
-  console.log("Lambda function function working haha");
+  console.log(
+    `${TableName}-tablename... Lambda function function working haha`
+  );
   console.log(event);
 
   //Check if user data is availble in database with AWS lambda, and store the details
-  const userAttributes = event?.request?.userAttributes;
-  if (!userAttributes) {
+  if (!event?.request?.userAttributes) {
     console.log("No user data available");
     return;
   }
   /**
-   * Check if user already exists
-   * Now, the userAttribute contain "sub" which is a unique identifier for every user created in cognito user pool
+   * Ater checking user exists, the userAttribute contain "sub" which is a unique identifier for every user created in cognito user pool
    * Store this data to the database as id for a user
    */
+  const { sub, name, email } = event.request.userAttributes;
   const newUser = {
-    id: userAttributes.sub,
-    name: userAttributes.name,
-    email: userAttributes.email,
+    id: sub,
+    name: name,
+    email: email,
   };
   //If not already saved, save user to dynamo database
-  if (await userExists(newUser.id)) {
+  if (!(await userExists(newUser.id))) {
     await saveUser(newUser);
     console.log(`${newUser.id} has been saved to database`);
   } else {
