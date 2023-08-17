@@ -8,6 +8,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.1",
     "@aws-amplify/ui-react-native": "^1.2.20",
     "@react-native-async-storage/async-storage": "^1.19.0",
     "@react-native-community/netinfo": "^9.4.1",
@@ -18,10 +19,13 @@
     "@types/react": "~18.0.27",
     "amazon-cognito-identity-js": "^6.3.1",
     "aws-amplify": "^5.3.3",
+    "aws-appsync-auth-link": "^3.0.7",
+    "aws-appsync-subscription-link": "^3.1.2",
     "expo": "~48.0.18",
     "expo-camera": "~13.2.1",
     "expo-splash-screen": "~0.18.2",
     "expo-status-bar": "~1.4.4",
+    "graphql": "^14.7.0",
     "react": "18.2.0",
     "react-hook-form": "^7.45.1",
     "react-native": "0.71.8",
@@ -43,3 +47,4 @@
   },
   "private": true
 }
+

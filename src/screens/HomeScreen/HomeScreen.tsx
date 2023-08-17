@@ -11,6 +11,7 @@ import React,{useRef,useState, useEffect} from 'react';
 import FeedPost from '../../components/FeedPost/FeedPost';
 import {graphqlOperation, API} from 'aws-amplify';
 
+
 export const listPosts = /* GraphQL */ `
   query ListPosts(
     $filter: ModelPostFilterInput
