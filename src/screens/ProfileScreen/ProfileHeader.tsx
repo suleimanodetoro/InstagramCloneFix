@@ -1,15 +1,18 @@
 import {Image, Text, View, } from 'react-native';
 import React from 'react';
-import user from '../../assets/data/user.json';
 import styles from './styles';
 import Button from '../../components/Button/';
 import { useNavigation } from '@react-navigation/native';
 import { ProfileNavigationProp } from '../../types/navigation';
 import { Auth } from 'aws-amplify';
+import { User } from '../../API';
+import { DEFAULT_USER_IMAGE } from '../../config';
 
-// import { useAuthenticator } from '@aws-amplify/ui-react-native';
+interface IProfileHeader {
+  user: User,
 
-const ProfileHeader = () => {
+}
+const ProfileHeader = ({user}: IProfileHeader) => {
   async function signOut() {
     try {
       await Auth.signOut();
@@ -23,19 +26,19 @@ const ProfileHeader = () => {
         {/* Header Row */}
         <View style={styles.headerRow}>
           {/* Profile picture */}
-          <Image source={{uri: user.image}} style={styles.avatar} />
+          <Image source={{uri: user.image || DEFAULT_USER_IMAGE}} style={styles.avatar} />
   
           {/* Posts, Followers, Following */}
           <View style={styles.numberContainer}>
-            <Text style={styles.numberText}>98</Text>
+            <Text style={styles.numberText}>{user.nOfPosts}</Text>
             <Text style={styles.metadataText}>Posts</Text>
           </View>
           <View style={styles.numberContainer}>
-            <Text style={styles.numberText}>150</Text>
+            <Text style={styles.numberText}>{user.nOfFollowers}</Text>
             <Text style={styles.metadataText}>Followers</Text>
           </View>
           <View style={styles.numberContainer}>
-            <Text style={styles.numberText}>98</Text>
+            <Text style={styles.numberText}>{user.nOfFollowings}</Text>
             <Text style={styles.metadataText}>Following</Text>
           </View>
         </View>
