@@ -1,82 +1,28 @@
 import {
   FlatList,
-  Image,
-  ScrollView,
   StyleSheet,
   Text,
   View,
-  ViewabilityConfig, ViewToken,SafeAreaView, StatusBar
+  ViewabilityConfig,SafeAreaView, StatusBar, ActivityIndicator
 } from 'react-native';
-import React,{useRef,useState, useEffect} from 'react';
+import React,{useRef,useState} from 'react';
 import FeedPost from '../../components/FeedPost/FeedPost';
-import {graphqlOperation, API} from 'aws-amplify';
+
+/**
+ * Instead of of using AppSync library, use the apollo library gql
+ */
+import {useQuery} from '@apollo/client';
+import { listPosts } from './queries';
+import { ListPostsQuery, ListPostsQueryVariables } from '../../API';
+import ApiErrorMessage from '../../components/ApiErrorMessage/ApiErrorMessage';
 
 
-export const listPosts = /* GraphQL */ `
-  query ListPosts(
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        description
-        image
-        video
-        images
-        nOfComments
-        nOfLikes
-        userID
-        User {
-          id
-          name
-          username
-          image
-        }
-        Comments {
-          items {
-            id
-            comment
-            User {
-              id
-              name
-              username
-            }
-          }
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        __typename
-      }
-      nextToken
-      startedAt
-      __typename
-    }
-  }
-`;
 
 const HomeScreen = (props) => {
   const [activePostId, setActivePostId] = useState < string | null > (null);
-  //state variable to store post data requested from database
-  const [posts, setPosts] = useState([])
-  // graphql request to query database
-
-  const fetchPost = async() =>{    
-    const response = await API.graphql(graphqlOperation(listPosts));    
-    setPosts(response.data.listPosts.items)
-
-  }
-
-  useEffect(() => {
-    fetchPost();
-  }, []);
-  
-
-
+  const {data, loading, error} = useQuery<ListPostsQuery,ListPostsQueryVariables >(listPosts, {
+    errorPolicy: 'all',
+  });
 
   const viewabilityConfig: ViewabilityConfig = {
     itemVisiblePercentThreshold: 55, // do x when component is 50% visible
@@ -93,6 +39,18 @@ const HomeScreen = (props) => {
       });
     }
   });
+  if (loading) {
+    return <ActivityIndicator/>;
+    
+  }
+  if (error) {
+    console.log('erorrrr occuredddd');
+    
+    return (<ApiErrorMessage title='Error fetching Post' message={error.message}/>)
+  };
+  
+  
+  const posts = data?.listPosts?.items || [];
   
 
   return (
@@ -102,8 +60,8 @@ const HomeScreen = (props) => {
         />
     <FlatList
       data={posts}
-      renderItem={({item}) => <FeedPost post={item} isVisible={activePostId === item.id} />}
-      keyExtractor={item => `post-${item.createdAt}-${item.User?.username}`}
+      renderItem={({item}) => item && <FeedPost post={item} isVisible={activePostId === item.id} />}
+      keyExtractor={item => `post-${item.createdAt}-${item.id}`}
       showsVerticalScrollIndicator={false}
       viewabilityConfig={viewabilityConfig}
       onViewableItemsChanged={onViewableItemsChanged.current}

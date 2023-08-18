@@ -49,6 +49,7 @@ const ProfileHeader = () => {
   
         <View style={{flexDirection: 'row'}}>
           <Button
+          inline={true}
             text="Edit Profile"
             onPress={() => {
               //Call the screen name as declared in the profilestack navigator handling the naviagtion of profile screen, even though it is nested in bottom tab, which is in the index of the navigation
@@ -56,6 +57,7 @@ const ProfileHeader = () => {
             }}
           />
           <Button
+          inline
             text="Log out"
             onPress={() => signOut()
             }

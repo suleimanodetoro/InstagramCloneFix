@@ -1446,7 +1446,7 @@ export type GetPostQuery = {
     _lastChangedAt: number,
   } | null,
 };
-
+//Use this and the listPostsQuery to define type for data in in homescreen
 export type ListPostsQueryVariables = {
   filter?: ModelPostFilterInput | null,
   limit?: number | null,
