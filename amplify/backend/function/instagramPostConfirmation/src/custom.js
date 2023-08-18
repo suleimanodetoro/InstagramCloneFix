@@ -104,6 +104,9 @@ exports.handler = async (event, context) => {
     id: sub,
     name: name,
     email: email,
+    nOfPosts: 0,
+    nOfFollowers: 0,
+    nOfFollowings: 0,
   };
   //If not already saved, save user to dynamo database
   if (!(await userExists(newUser.id))) {

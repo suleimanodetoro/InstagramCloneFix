@@ -8,7 +8,6 @@ import styles from "./styles";
 import { size } from "../../theme/fonts";
 import colors from "../../theme/colors";
 import Comment from "../Comment/Comment";
-import { IPost } from "../../types/models";
 import DoublePressable from "../DoublePressable/";
 import Carousel from "../Carousel/Carousel";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";

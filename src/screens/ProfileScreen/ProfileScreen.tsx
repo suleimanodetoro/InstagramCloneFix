@@ -16,14 +16,18 @@ import { useQuery } from "@apollo/client";
 import { getUser } from "./queries";
 import ApiErrorMessage from "../../components/ApiErrorMessage/ApiErrorMessage";
 import { GetUserQuery, GetUserQueryVariables } from "../../API";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const ProfileScreen = () => {
   const route = useRoute<MyProfileRouteProp | UserProfileRouteProp>();
   const navigation = useNavigation<
     MyProfileNavigationProp | UserProfileNavigationProp
   >();
-  //Destructure user data being passes from FeedPost=>
-  const userId = route.params?.userId;
+  //Destructure the userId property in authContext and store in authUserId 
+  const {userId: authUserId} = useAuthContext();
+  const userId = route?.params?.userId || authUserId;
+
+
   const { data, loading, error } = useQuery<
     GetUserQuery,
     GetUserQueryVariables

@@ -7,12 +7,17 @@ import { ProfileNavigationProp } from '../../types/navigation';
 import { Auth } from 'aws-amplify';
 import { User } from '../../API';
 import { DEFAULT_USER_IMAGE } from '../../config';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 interface IProfileHeader {
   user: User,
 
 }
 const ProfileHeader = ({user}: IProfileHeader) => {
+  const userImage = user?.image?.startsWith("http") ? user.image : DEFAULT_USER_IMAGE;
+
+  //create authUser variable to compare against the user Id of a post
+  const {userId: authUserId}= useAuthContext();
   async function signOut() {
     try {
       await Auth.signOut();
@@ -26,7 +31,13 @@ const ProfileHeader = ({user}: IProfileHeader) => {
         {/* Header Row */}
         <View style={styles.headerRow}>
           {/* Profile picture */}
-          <Image source={{uri: user.image || DEFAULT_USER_IMAGE}} style={styles.avatar} />
+          
+          
+          <Image
+        source={{ uri: userImage }}
+        style={styles.avatar}
+        // Other image props
+      />
   
           {/* Posts, Followers, Following */}
           <View style={styles.numberContainer}>
@@ -48,9 +59,9 @@ const ProfileHeader = ({user}: IProfileHeader) => {
           <Text>{user.bio}</Text>
         </View>
   
-        {/* Profile Buttons */}
-  
-        <View style={{flexDirection: 'row'}}>
+        {/* Profile Buttons. Only render on the users own posts */}
+        {authUserId === user.id && (
+          <View style={{flexDirection: 'row'}}>
           <Button
           inline={true}
             text="Edit Profile"
@@ -66,6 +77,8 @@ const ProfileHeader = ({user}: IProfileHeader) => {
             }
           />
         </View>
+        )}
+        
   
         
       </View>

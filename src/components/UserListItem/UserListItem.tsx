@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View,Image,Pressable } from 'react-native'
 import React from 'react'
-import { IUser } from '../../types/models'
 import { weight } from '../../theme/fonts';
 import colors from '../../theme/colors';
 import { useNavigation } from '@react-navigation/native';
+import { User } from '../../API';
+import { DEFAULT_USER_IMAGE } from '../../config';
 
 interface IUserListItem {
-    user: IUser
+    user: User
 
 }
 
@@ -19,7 +20,7 @@ const UserListItem = ({user}: IUserListItem) => {
     }
   return (
     <Pressable onPress={goToUserScreen} style={styles.root}>
-      <Image style={styles.image} source={{uri: user.image}} />
+      <Image style={styles.image} source={{uri: user.image || DEFAULT_USER_IMAGE}} />
       <View>
         <Text style={styles.name}>{user.name}</Text>
         <Text style={styles.username}>{user.username}</Text>
