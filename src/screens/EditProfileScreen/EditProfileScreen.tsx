@@ -37,9 +37,11 @@ const EditProfileScreen = () => {
 
   const {data, loading, error} = useQuery<GetUserQuery, GetUserQueryVariables>(
     getUser,
-    {variables: {id: userId}},
+    {variables: {id: userId}, errorPolicy: "all",},
   );
   const user = data?.getUser;
+  console.log(user);
+  
 
   const [getUsersByUsername] = useLazyQuery<
     UsersByUsernameQuery,

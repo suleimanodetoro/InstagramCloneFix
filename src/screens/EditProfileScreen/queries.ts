@@ -1,51 +1,52 @@
 import {gql} from '@apollo/client';
 
-export const getUser = gql`
+
+export const getUser = gql `
   query GetUser($id: ID!) {
     getUser(id: $id) {
       id
       name
-      email
-      username
-      bio
-      website
-      nofPosts
-      nofFollowers
-      nofFollowings
       image
+      bio
+      username
+      website
+      nOfFollowings
+      nOfFollowers
+      nOfPosts
+      email
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
 
-export const updateUser = gql`
+export const updateUser = gql `
   mutation UpdateUser(
     $input: UpdateUserInput!
     $condition: ModelUserConditionInput
   ) {
     updateUser(input: $input, condition: $condition) {
       id
-
       name
-      username
-      bio
-      website
       image
-
+      bio
+      username
+      website
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
 
-export const deleteUser = gql`
+export const deleteUser = gql `
   mutation DeleteUser(
     $input: DeleteUserInput!
     $condition: ModelUserConditionInput
@@ -53,15 +54,18 @@ export const deleteUser = gql`
     deleteUser(input: $input, condition: $condition) {
       id
 
+      createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
 
-export const usersByUsername = gql`
+
+export const usersByUsername = gql `
   query UsersByUsername(
     $username: String!
     $sortDirection: ModelSortDirection
@@ -82,6 +86,7 @@ export const usersByUsername = gql`
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
