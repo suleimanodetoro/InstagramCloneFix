@@ -76,7 +76,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     //Use provider to pass user and userId down
-    <AuthContext.Provider value={{ user, userId: user?.attributes.sub }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, userId: user?.attributes?.sub }}>{children}</AuthContext.Provider>
   );
 };
 

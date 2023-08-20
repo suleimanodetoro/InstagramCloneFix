@@ -28,7 +28,7 @@ const ProfileScreen = () => {
   const userId = route?.params?.userId || authUserId;
 
 
-  const { data, loading, error } = useQuery<
+  const { data, loading, error,refetch } = useQuery<
     GetUserQuery,
     GetUserQueryVariables
   >(getUser, {
@@ -49,6 +49,7 @@ const ProfileScreen = () => {
       <ApiErrorMessage
         title="Error fetching the User"
         message={error.message || "User not found"}
+        onRetry={()=> refetch()}
       />
     );
   }
@@ -57,10 +58,14 @@ const ProfileScreen = () => {
 
   return (
     //GridView Profile Media
+    // To implement scroll down to refresh, you need to pass refetch to the feedgridview
 
     <FeedGridView
       data={user.Posts?.items || []}
       ListHeaderComponent={() => <ProfileHeader user={user} />}
+      refetch={refetch}
+      loading={loading}
+
     />
   );
 };

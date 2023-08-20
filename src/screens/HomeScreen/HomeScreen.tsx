@@ -20,7 +20,7 @@ import ApiErrorMessage from '../../components/ApiErrorMessage/ApiErrorMessage';
 
 const HomeScreen = (props) => {
   const [activePostId, setActivePostId] = useState < string | null > (null);
-  const {data, loading, error} = useQuery<ListPostsQuery,ListPostsQueryVariables >(listPosts, {
+  const {data, loading, error, refetch} = useQuery<ListPostsQuery,ListPostsQueryVariables >(listPosts, {
     errorPolicy: 'all',
   });
 
@@ -46,7 +46,7 @@ const HomeScreen = (props) => {
   if (error) {
     console.log('erorrrr occuredddd');
     
-    return (<ApiErrorMessage title='Error fetching Post' message={error.message}/>)
+    return (<ApiErrorMessage title='Error fetching Post' message={error.message} onRetry={()=>refetch()}/>)
   };
   
   
