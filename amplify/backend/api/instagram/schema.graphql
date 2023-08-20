@@ -35,6 +35,7 @@ type User @model @auth(rules: [{ allow: public }]) {
   image: String
   bio: String
   username: String
+    @index(name: "usersByUsername", queryField: "usersByUsername")
   website: AWSURL
   nOfFollowings: Int!
   nOfFollowers: Int!

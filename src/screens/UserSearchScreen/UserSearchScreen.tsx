@@ -26,7 +26,8 @@ const UserSearchScreen = () => {
       message={error.message}
     />;
   }
-  const users = data?.listUsers?.items || [];
+  //Get users in databse but also filter out softdeleted users
+  const users = (data?.listUsers?.items).filter(user => user && !user._deleted) || [];
   return (
     <FlatList
       data={users}

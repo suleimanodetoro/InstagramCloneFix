@@ -5,6 +5,7 @@ import colors from '../../theme/colors';
 import {User} from '../../API';
 import styles from './styles';
 
+//Define types that can be changed =>
 type IEditableUserField = 'name' | 'username' | 'website' | 'bio';
 export type IEditableUser = Pick<User, IEditableUserField>;
 

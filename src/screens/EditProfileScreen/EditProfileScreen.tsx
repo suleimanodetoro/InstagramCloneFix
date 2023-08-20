@@ -45,7 +45,11 @@ const EditProfileScreen = () => {
     UsersByUsernameQuery,
     UsersByUsernameQueryVariables
   >(usersByUsername);
-
+    /**
+     * The first parameter in use mutation is called everytime useMutation is called
+     * Second parameter is like in useQuery,data received, loading boolean, and error
+     * second parameters are renamed as they are already present
+     */
   const [doUpdateUser, {loading: updateLoading, error: updateError}] =
     useMutation<UpdateUserMutation, UpdateUserMutationVariables>(updateUser);
 
@@ -54,6 +58,7 @@ const EditProfileScreen = () => {
     DeleteUserMutationVariables
   >(deleteUser);
 
+  // Whenever the user changes(note its undefined on first launch), or the setter is called, perform the following the set default values when you click the edit button
   useEffect(() => {
     if (user) {
       setValue('name', user.name);
@@ -64,6 +69,7 @@ const EditProfileScreen = () => {
   }, [user, setValue]);
 
   const onSubmit = async (formData: IEditableUser) => {
+    //
     const input: UpdateUserInput = {
       id: userId,
       ...formData,
@@ -75,6 +81,7 @@ const EditProfileScreen = () => {
     }
 
     await doUpdateUser({
+      //form inputs filled, mutate values in database
       variables: {input},
     });
     if (navigation.canGoBack()) {
@@ -122,7 +129,8 @@ const EditProfileScreen = () => {
       variables: {input: {id: userId, _version: user._version}},
     });
 
-    // delete from Cognito
+    // delete from Cognito. If there's an error, log.
+    // If no error, trigger log out function which returns to sign in page
     authUser?.deleteUser(err => {
       if (err) {
         console.log(err);
@@ -130,7 +138,7 @@ const EditProfileScreen = () => {
       Auth.signOut();
     });
   };
-
+// On execution, open image library to select media.
   const onChangePhoto = () => {
     launchImageLibrary(
       {mediaType: 'photo'},
@@ -198,8 +206,8 @@ const EditProfileScreen = () => {
         rules={{
           required: 'Username is required',
           minLength: {
-            value: 3,
-            message: 'Username should be more than 3 character',
+            value: 6,
+            message: 'Username should be more than 6 characters',
           },
           validate: validateUsername,
         }}
