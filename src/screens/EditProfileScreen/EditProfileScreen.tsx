@@ -154,6 +154,7 @@ const EditProfileScreen = () => {
 
   const validateUsername = async (username: string) => {
     // query the database based on the usersByUsername
+    //using lazyquery means the query will only be sent when called not when the component is mounted.
 
     try {
       const response = await getUsersByUsername({variables: {username}});

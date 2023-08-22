@@ -26,6 +26,7 @@ const ProfileHeader = ({user}: IProfileHeader) => {
     }
   }
     const navigation = useNavigation<ProfileNavigationProp>();
+    navigation.setOptions({title: user?.username || 'Profile'})
     return (
       <View style={styles.root}>
         {/* Header Row */}
