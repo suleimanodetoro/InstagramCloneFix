@@ -10,49 +10,56 @@ import {
 import Entypo from "react-native-vector-icons/Entypo";
 import { useMutation } from "@apollo/client";
 import { deletePost } from "./queries";
-import { DeletePostMutation, DeletePostMutationVariables, Post } from "../../API";
+import {
+  DeletePostMutation,
+  DeletePostMutationVariables,
+  Post,
+} from "../../API";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 interface IPostMenu {
-  post: Post
+  post: Post;
 }
 
+const PostMenu = ({ post }: IPostMenu) => {
+  //Hacky solution to stop any user from deleting any post
+  const { userId } = useAuthContext();
+  const postUserId = post.User?.id;
+  const isMyPost: Boolean = userId === postUserId;
 
-
-const PostMenu = ({post}: IPostMenu) => {
-  const [doDeletePost] = useMutation<DeletePostMutation,DeletePostMutationVariables>(deletePost,{
-    variables:{
-      input:{
-        id:post.id,
+  const [doDeletePost] = useMutation<
+    DeletePostMutation,
+    DeletePostMutationVariables
+  >(deletePost, {
+    variables: {
+      input: {
+        id: post.id,
         _version: post._version,
-      }
-    }
+      },
+    },
   });
-  const onDeleteOptionPressed = () =>{
-    //Confirm the user actually wants to delete the post 
-    Alert.alert('Are you sure ?', 'Deleting a post is permernent.', [
+  const onDeleteOptionPressed = () => {
+    //Confirm the user actually wants to delete the post
+    Alert.alert("Are you sure ?", "Deleting a post is permernent.", [
       {
-        text:"Cancel",
-        style:'cancel'
+        text: "Cancel",
+        style: "cancel",
       },
       {
-        text: 'Delete Post',
-        style:'destructive',
-        onPress: startDeletingPost,                                    
-      }
-    ])
-  }
-  const startDeletingPost = async()=>{
+        text: "Delete Post",
+        style: "destructive",
+        onPress: startDeletingPost,
+      },
+    ]);
+  };
+  const startDeletingPost = async () => {
     const response = await doDeletePost();
     console.log(response);
-    
+  };
 
-  }
-
-  const onEditFunctionPress = () =>{
-    
+  const onEditFunctionPress = () => {
     console.warn("Edit button pressed");
-    
-  }
+  };
   return (
     <Menu renderer={renderers.SlideInMenu}>
       <MenuTrigger>
@@ -66,13 +73,16 @@ const PostMenu = ({post}: IPostMenu) => {
         <MenuOption onSelect={() => alert(`Reporting...`)}>
           <Text style={styles.optionText}>Report</Text>
         </MenuOption>
-        <MenuOption onSelect={onDeleteOptionPressed}>
-          <Text style={[styles.optionText, {color:'red'}]}>Delete</Text>
-        </MenuOption>
-        <MenuOption onSelect={onEditFunctionPress}>
-        <Text style={styles.optionText}>Edit</Text>
-        </MenuOption>
-        
+        {isMyPost && (
+          <>
+            <MenuOption onSelect={onDeleteOptionPressed}>
+              <Text style={[styles.optionText, { color: "red" }]}>Delete</Text>
+            </MenuOption>
+            <MenuOption onSelect={onEditFunctionPress}>
+              <Text style={styles.optionText}>Edit</Text>
+            </MenuOption>
+          </>
+        )}
       </MenuOptions>
     </Menu>
   );
@@ -84,9 +94,9 @@ const styles = StyleSheet.create({
   threeDots: {
     marginLeft: "auto",
   },
-  optionText:{
+  optionText: {
     fontSize: 16,
-    padding:10,
-    textAlign:'center'
+    padding: 10,
+    textAlign: "center",
   },
 });
