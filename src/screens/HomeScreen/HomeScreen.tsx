@@ -61,7 +61,7 @@ const HomeScreen = (props) => {
     <FlatList
       data={posts}
       renderItem={({item}) => item && <FeedPost post={item} isVisible={activePostId === item.id} />}
-      onRefresh={refetch}
+      onRefresh={() => refetch()}
       refreshing={loading}
       keyExtractor={item => `post-${item.createdAt}-${item.id}`}
       showsVerticalScrollIndicator={false}

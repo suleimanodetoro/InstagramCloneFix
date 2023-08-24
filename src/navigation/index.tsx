@@ -12,7 +12,6 @@ import {
 import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import EditProfileScreen from "../screens/EditProfileScreen/EditProfileScreen";
 import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
-import PostUploadScreen from "../screens/PostUploadScreen/PostUploadScreen";
 import CommentsScreen from "../screens/CommentsScreen/CommentsScreen";
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -60,7 +59,7 @@ const Navigation = () => {
    * Null !=== undefined hence Login in screen will be displayed.
    */
 
-  if (user === undefined) {
+  if (user === undefined || loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator />

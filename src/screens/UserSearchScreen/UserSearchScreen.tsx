@@ -32,7 +32,7 @@ const UserSearchScreen = () => {
     <FlatList
       data={users}
       renderItem={({ item }) =>item && <UserListItem user={item} />}
-      onRefresh={refetch}
+      onRefresh={() => refetch()}
       refreshing={loading}
     />
   );

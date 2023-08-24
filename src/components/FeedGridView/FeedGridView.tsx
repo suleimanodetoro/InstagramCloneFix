@@ -22,7 +22,7 @@ const FeedGridView = ({data,ListHeaderComponent, refetch, loading}: IFeedGridVie
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={ListHeaderComponent}
       refreshing={loading}
-      onRefresh={refetch}
+      onRefresh={() => refetch()}
       
       
 

@@ -65,7 +65,6 @@ const ProfileScreen = () => {
       ListHeaderComponent={() => <ProfileHeader user={user} />}
       refetch={refetch}
       loading={loading}
-
     />
   );
 };

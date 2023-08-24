@@ -5,7 +5,8 @@ import colors from '../../theme/colors';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const flashModes = [FlashMode.off, FlashMode.on, FlashMode.auto, FlashMode.torch];
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { CameraNavigationProp } from '../../types/navigation';
 
 const flashModeToIcon = {
   [FlashMode.off]: 'flash-off',
@@ -14,7 +15,7 @@ const flashModeToIcon = {
   [FlashMode.torch]: 'highlight'
 };
 
-const PostUploadScreen = () => {
+const CameraScreen = () => {
   const [hasPermissions, setPermissions] = useState(false);
   const [cameraType, setCameraType] = useState(CameraType.front);
   const [flash, setFlash] = useState(FlashMode.off);
@@ -22,6 +23,8 @@ const PostUploadScreen = () => {
   const [isRecording, setIsRecording] = useState(false);
 
   const camera = useRef<Camera>(null);
+  //Anotate it the naviagtion hook with the cameraprop create from the param list
+  const navigation = useNavigation<CameraNavigationProp>();
 
   const flipCamera = () => {
     setCameraType(currentCameraType => currentCameraType === CameraType.back ? CameraType.front : CameraType.back);
@@ -42,6 +45,7 @@ const PostUploadScreen = () => {
     try {
       console.warn('picture taken');
       const result = await camera.current.takePictureAsync(options);
+      navigateToCreateScreen();
     } catch (error) {
       console.log('error');
     }
@@ -75,6 +79,10 @@ const PostUploadScreen = () => {
     camera.current?.stopRecording();
     setIsRecording(false);
   };
+
+  const navigateToCreateScreen = () => {
+    navigation.navigate("Create", {images:["https://th.bing.com/th/id/OIP.nuwdJqacLwjBMPU82V5U5gHaHa?w=190&h=190&c=7&r=0&o=5&dpr=1.3&pid=1.7","https://images.pexels.com/photos/443356/pexels-photo-443356.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"]})
+  }
 
   useEffect(() => {
     const getPermissions = async () => {
@@ -121,7 +129,7 @@ const PostUploadScreen = () => {
   );
 };
 
-export default PostUploadScreen;
+export default CameraScreen;
 
 const styles = StyleSheet.create({
   page: {
