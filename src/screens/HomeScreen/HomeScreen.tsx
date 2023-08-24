@@ -49,8 +49,8 @@ const HomeScreen = (props) => {
     return (<ApiErrorMessage title='Error fetching Post' message={error.message} onRetry={()=>refetch()}/>)
   };
   
-  
-  const posts = data?.listPosts?.items || [];
+  //Filter deleted posts
+  const posts = (data?.listPosts?.items).filter(post => !post?._deleted) || [];
   
 
   return (
