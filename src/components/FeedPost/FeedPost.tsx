@@ -17,6 +17,9 @@ import { Post } from "../../API";
 import { useNavigation } from "@react-navigation/native";
 import { FeedNavigationProp } from "../../types/navigation";
 import { DEFAULT_USER_IMAGE } from "../../config";
+
+import PostMenu from "./PostMenu";
+
 interface IFeedPost {
   post: Post;
   isVisible: boolean;
@@ -54,7 +57,7 @@ const FeedPost = (props: IFeedPost) => {
       <DoublePressable onDoublePress={toggleLikeState}>
         <Image
           source={{
-            uri: post.image ,
+            uri: post.image,
           }}
           style={styles.image}
         />
@@ -74,6 +77,7 @@ const FeedPost = (props: IFeedPost) => {
 
   return (
     <View style={styles.post}>
+      
       {/* Header */}
       <View style={styles.header}>
         <Image
@@ -86,11 +90,7 @@ const FeedPost = (props: IFeedPost) => {
         <Pressable onPress={navigateToUser}>
           <Text style={styles.userName}>{post.User?.username}</Text>
         </Pressable>
-        <Entypo
-          name={"dots-three-horizontal"}
-          size={16}
-          style={styles.threeDots}
-        />
+        <PostMenu post={post}/>
       </View>
 
       {/* Content */}

@@ -1,40 +1,47 @@
-import Navigation from './src/navigation';
+import Navigation from "./src/navigation";
 
-import { Button, FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, View, StatusBar } from 'react-native'
 import {
-  SafeAreaProvider,
-} from 'react-native-safe-area-context';
-import React from 'react'
-import { Amplify, Auth } from 'aws-amplify';
-import { Authenticator, ThemeProvider } from '@aws-amplify/ui-react-native';
-import Client from './src/apollo/Client';
+  Button,
+  FlatList,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+} from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import React from "react";
+import { Amplify, Auth } from "aws-amplify";
+import { Authenticator, ThemeProvider } from "@aws-amplify/ui-react-native";
+import Client from "./src/apollo/Client";
+
+//To use pop up module installed =>
+import { MenuProvider } from "react-native-popup-menu";
 
 // AWS related imports
-import config from './src/aws-exports';
-import { PasswordField } from '@aws-amplify/ui-react-native/dist/primitives';
-import AuthContextProvider from './src/contexts/AuthContext';
+import config from "./src/aws-exports";
+import { PasswordField } from "@aws-amplify/ui-react-native/dist/primitives";
+import AuthContextProvider from "./src/contexts/AuthContext";
 //Because some changes made weren't reflected, we'll do the following=>
 Amplify.configure(config);
 
 const App = () => {
   return (
-    <AuthContextProvider>
-      <Client>
-      <Navigation />
-
-      </Client>
-      
-    </AuthContextProvider>
-        
-
-  )
+    <SafeAreaProvider>
+      <MenuProvider>
+        <AuthContextProvider>
+          <Client>
+            <Navigation />
+          </Client>
+        </AuthContextProvider>
+      </MenuProvider>
+    </SafeAreaProvider>
+  );
 };
 
-
-
 export default App;
-
-
 
 // import Navigation from './src/navigation';
 
@@ -117,12 +124,7 @@ export default App;
 //       </Authenticator>
 //     </Authenticator.Provider>
 
-
-
-
 //   )
 // };
-
-
 
 // export default App;
