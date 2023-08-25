@@ -5,6 +5,7 @@ import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import logo from '../assets/images/logo.png';
 import { HomeStackNavigatorParamList } from '../types/navigation';
+import UpdatePostScreen from '../screens/UpdatePostScreen/UpdatePostScreen';
 
 const Stack = createNativeStackNavigator<HomeStackNavigatorParamList>();
 const HomeStackNavigator = () => {
@@ -12,6 +13,8 @@ const HomeStackNavigator = () => {
     <Stack.Navigator>
         <Stack.Screen name='Feed' component={HomeScreen} options={{headerTitle:HeaderTitle}} />
         <Stack.Screen name='UserProfile' component={ProfileScreen} options={{title:'Profile'}}/>
+        <Stack.Screen name='UpdatePost' component={UpdatePostScreen} options={{title:'Update Post'}}/>
+        
     </Stack.Navigator>
   )
 };

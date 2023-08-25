@@ -16,12 +16,15 @@ import {
   Post,
 } from "../../API";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { FeedNavigationProp, HomeStackNavigatorParamList, UpdatePostRouteProp } from "../../types/navigation";
 
 interface IPostMenu {
   post: Post;
 }
 
 const PostMenu = ({ post }: IPostMenu) => {
+  const navigation = useNavigation<FeedNavigationProp>();
   //Hacky solution to stop any user from deleting any post
   const { userId } = useAuthContext();
   const postUserId = post.User?.id;
@@ -57,8 +60,8 @@ const PostMenu = ({ post }: IPostMenu) => {
     console.log(response);
   };
 
-  const onEditFunctionPress = () => {
-    console.warn("Edit button pressed");
+  const onEditFunctionPress = () => {    
+    navigation.navigate('UpdatePost', {id:post.id});
   };
   return (
     <Menu renderer={renderers.SlideInMenu}>

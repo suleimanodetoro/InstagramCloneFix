@@ -6,8 +6,8 @@ import DoublePressable from '../DoublePressable/DoublePressable';
 
 interface IVideo {
   uri: string;
-  paused: boolean;
-  onDoublePress: () => void;
+  paused?: boolean;
+  onDoublePress?: () => void;
 
 }
 const VideoPlayer = ({uri,paused,onDoublePress}: IVideo) => {

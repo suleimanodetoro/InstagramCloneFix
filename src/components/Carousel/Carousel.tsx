@@ -5,8 +5,8 @@ import colors from '../../theme/colors';
 import DoublePressable from '../DoublePressable/DoublePressable';
 
 interface ICarousel {
-  post: string[];
-  onDoublePress: () => void;
+  images?: string[];
+  onDoublePress?: () => void;
 }
 const Carousel = ({images, onDoublePress}: ICarousel) => {
   const {width} = useWindowDimensions();

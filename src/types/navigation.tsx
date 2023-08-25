@@ -2,6 +2,7 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { RouteProp } from "@react-navigation/native";
+import { Route } from "react-native-tab-view";
 export type RootNavigatorParamList = {
   Auth: undefined;
   Home: undefined;
@@ -94,11 +95,14 @@ export type MyProfileNavigationProp = BottomTabNavigationProp<
   BottomTabNavigatorParamList,
   "MyProfile"
 >;
-
+//From the homestack, you can navigate/display from feed, updatepost, or userprofile with different params
 export type HomeStackNavigatorParamList = {
   Feed: undefined;
   UserProfile: { userId: string };
+  UpdatePost: {id: string};
 };
+
+export type UpdatePostRouteProp = RouteProp<HomeStackNavigatorParamList, "UpdatePost">;
 
 export type UserProfileNavigationProp = NativeStackNavigationProp<
   HomeStackNavigatorParamList,

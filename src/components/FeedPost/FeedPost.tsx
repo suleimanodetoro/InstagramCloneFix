@@ -89,7 +89,7 @@ const FeedPost = (props: IFeedPost) => {
 
         <Pressable onPress={navigateToUser}>
           <Text style={styles.userName}>{post.User?.username}</Text>
-        </Pressable>
+        </Pressable>        
         <PostMenu post={post}/>
       </View>
 

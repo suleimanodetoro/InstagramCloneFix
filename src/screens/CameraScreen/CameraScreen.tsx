@@ -81,7 +81,7 @@ const CameraScreen = () => {
   };
 
   const navigateToCreateScreen = () => {
-    navigation.navigate("Create", {images:["https://th.bing.com/th/id/OIP.nuwdJqacLwjBMPU82V5U5gHaHa?w=190&h=190&c=7&r=0&o=5&dpr=1.3&pid=1.7","https://images.pexels.com/photos/443356/pexels-photo-443356.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"]})
+    navigation.navigate("Create", {image:"https://images.pexels.com/photos/443356/pexels-photo-443356.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"})
   }
 
   useEffect(() => {
