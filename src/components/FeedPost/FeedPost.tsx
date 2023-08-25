@@ -11,7 +11,7 @@ import Comment from "../Comment/Comment";
 import DoublePressable from "../DoublePressable/";
 import Carousel from "../Carousel/Carousel";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
-import { Post } from "../../API";
+import { CreateLikeMutation, CreateLikeMutationVariables, Post } from "../../API";
 
 //import hook to enable naviagtion functionality
 import { useNavigation } from "@react-navigation/native";
@@ -19,6 +19,9 @@ import { FeedNavigationProp } from "../../types/navigation";
 import { DEFAULT_USER_IMAGE } from "../../config";
 
 import PostMenu from "./PostMenu";
+import { useMutation } from "@apollo/client";
+import { createLike } from "./queries";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 interface IFeedPost {
   post: Post;
@@ -26,10 +29,21 @@ interface IFeedPost {
 }
 
 const FeedPost = (props: IFeedPost) => {
+  const {userId}= useAuthContext();
   const [isLiked, setLikeState] = useState(false);
+  const { post } = props;
+  const { isVisible } = props;
   const toggleLikeState = () => {
-    setLikeState((value) => !value);
+    doCreateLike();
   };
+  //function for like mutation
+  const [doCreateLike] = useMutation<CreateLikeMutation, CreateLikeMutationVariables>(createLike, {
+    variables:{
+      input:{userID:userId, postID: post.id}
+    }
+  });
+  
+  //Expand description
   const [descriptionExpended, setDescriptionExpanded] = useState(false);
   const toggleDescriptionExpansion = () => {
     setDescriptionExpanded((existingValue) => {
@@ -37,8 +51,7 @@ const FeedPost = (props: IFeedPost) => {
     });
   };
 
-  const { post } = props;
-  const { isVisible } = props;
+  
 
   const naviagtion = useNavigation<FeedNavigationProp>();
   const navigateToUser = () => {
