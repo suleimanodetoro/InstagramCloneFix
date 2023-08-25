@@ -84,9 +84,7 @@ const FeedPost = (props: IFeedPost) => {
   );
 
   //store like not deleted
-  const userLike = (usersLikeData?.LikesForPostByUser?.items).filter(
-    (likes) => !likes?._deleted
-  )[0];
+  const userLike = (usersLikeData?.LikesForPostByUser?.items || []).filter(likes => !likes?._deleted)[0];
 
   const naviagtion = useNavigation<FeedNavigationProp>();
   const navigateToUser = () => {
@@ -99,6 +97,11 @@ const FeedPost = (props: IFeedPost) => {
     naviagtion.navigate("Comments", { postId: post.id });
   };
 
+  const navigateToLikesPage = () =>{
+    naviagtion.navigate("PostLikes", {id:post.id})
+
+  }
+
   //Expand description
   const toggleDescriptionExpansion = () => {
     setDescriptionExpanded((existingValue) => {
@@ -107,7 +110,7 @@ const FeedPost = (props: IFeedPost) => {
   };
   const toggleLikeState = () => {
     // if user already liked the post...
-    if(userLike){
+    if (userLike) {
       doDeleteLike({
         variables: {
           input: {
@@ -117,13 +120,9 @@ const FeedPost = (props: IFeedPost) => {
         },
       });
       //Like post if post is not already liked
-
-    }else {
+    } else {
       doCreateLike();
-
     }
-    
-    
   };
 
   let content = null;
@@ -204,7 +203,7 @@ const FeedPost = (props: IFeedPost) => {
         </View>
         {/* lIKED BY XXXX  */}
         {/* Text element nesting is allowed in react native */}
-        <Text style={styles.text}>
+        <Text style={styles.text} onPress={navigateToLikesPage}>
           Liked by <Text style={styles.bold}>iddrissanddu</Text> and{" "}
           <Text style={styles.bold}>{post.nOfLikes} others</Text>
         </Text>
