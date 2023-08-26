@@ -33,6 +33,7 @@ export const createLike = gql `
       _deleted
       _lastChangedAt
       __typename
+      # Adding post here so the the like is update by apollo when post (noOFLikes ) changes
       Post {
         id
         nOfLikes
