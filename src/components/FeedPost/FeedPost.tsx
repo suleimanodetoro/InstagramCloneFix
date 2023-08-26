@@ -20,6 +20,8 @@ import {
   LikesForPostByUserQuery,
   LikesForPostByUserQueryVariables,
   Post,
+  UpdatePostMutation,
+  UpdatePostMutationVariables,
   UsersByUsernameQuery,
   UsersByUsernameQueryVariables,
 } from "../../API";
@@ -31,8 +33,14 @@ import { DEFAULT_USER_IMAGE } from "../../config";
 
 import PostMenu from "./PostMenu";
 import { useMutation, useQuery } from "@apollo/client";
-import { LikesForPostByUser, createLike, deleteLike } from "./queries";
+import {
+  LikesForPostByUser,
+  createLike,
+  deleteLike,
+  updatePost,
+} from "./queries";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { likesByUserID } from "../../graphql/queries";
 
 interface IFeedPost {
   post: Post;
@@ -63,6 +71,12 @@ const FeedPost = (props: IFeedPost) => {
     DeleteLikeMutationVariables
   >(deleteLike);
 
+  //function to use updatePost mutation to increae/decrese like count
+  const [doUpdatePost] = useMutation<
+    UpdatePostMutation,
+    UpdatePostMutationVariables
+  >(updatePost);
+
   //query to check posts liked by a user
   //Created by adding query field in schema.graphql
   // usersLikeData will be created for every post
@@ -83,10 +97,27 @@ const FeedPost = (props: IFeedPost) => {
     }
   );
 
-  //store like not deleted
-  const userLike = (usersLikeData?.LikesForPostByUser?.items || []).filter(likes => !likes?._deleted)[0];
+  //store likes that are not deleted
+  const userLike = (usersLikeData?.LikesForPostByUser?.items || []).filter(
+    (likes) => !likes?._deleted
+  )[0];
+  const postLikes = post?.Likes?.items.filter((like) => !like._deleted) || [];
 
   const naviagtion = useNavigation<FeedNavigationProp>();
+  //helper function to increment likes. Only acceptable inputs are 1 and -1
+  const manipulateLikeCount = (amount: 1 | -1) => {
+    doUpdatePost({
+      variables: {
+        input: {
+          id: post.id,
+          _version: post._version,
+          nOfLikes: post.nOfLikes + amount,
+        },
+      },
+    });
+  };
+
+  //naviagte to user porfile on clicking post username
   const navigateToUser = () => {
     if (post.User) {
       naviagtion.navigate("UserProfile", { userId: post.User?.id });
@@ -97,10 +128,9 @@ const FeedPost = (props: IFeedPost) => {
     naviagtion.navigate("Comments", { postId: post.id });
   };
 
-  const navigateToLikesPage = () =>{
-    naviagtion.navigate("PostLikes", {id:post.id})
-
-  }
+  const navigateToLikesPage = () => {
+    naviagtion.navigate("PostLikes", { id: post.id });
+  };
 
   //Expand description
   const toggleDescriptionExpansion = () => {
@@ -119,9 +149,13 @@ const FeedPost = (props: IFeedPost) => {
           },
         },
       });
-      //Like post if post is not already liked
-    } else {
+      //Decrese post like count
+      manipulateLikeCount(-1);
+    }
+    //Like post if post is not already liked
+    else {
       doCreateLike();
+      manipulateLikeCount(1);
     }
   };
 
@@ -203,10 +237,21 @@ const FeedPost = (props: IFeedPost) => {
         </View>
         {/* lIKED BY XXXX  */}
         {/* Text element nesting is allowed in react native */}
-        <Text style={styles.text} onPress={navigateToLikesPage}>
-          Liked by <Text style={styles.bold}>iddrissanddu</Text> and{" "}
-          <Text style={styles.bold}>{post.nOfLikes} others</Text>
-        </Text>
+        {/* Counting operation in dynamo db with scan operators can be very costly and slow
+        What we are going to do is use the updatePost mutation to increase/decrese number of likes
+        If post length is less than or equal to zero, display a simple text, else display the username. 
+        If the post likes are more than 1, conditionally render "and other"        
+        ... */}
+
+        {postLikes.length <= 0 ? (
+          <Text style={styles.text}>Be the first to like the post</Text>
+        ) : (
+          <Text style={styles.text} onPress={navigateToLikesPage}>
+            Liked by{" "}
+            <Text style={styles.bold}>{postLikes[0].User.username}</Text>{postLikes.length > 1 && (<>{' '}and <Text style={styles.bold}>{post.nOfLikes -1} others</Text> </>)} 
+          </Text>
+        )}
+
         {/* Post Description */}
         <Text
           numberOfLines={descriptionExpended ? 0 : 3}

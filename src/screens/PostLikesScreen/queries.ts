@@ -23,21 +23,19 @@ export const LikesForPostByUser = gql`
         id
         userID
         postID
-        User {
-          id
-          image
-          name
-        }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        __typename
+        User {
+          id
+          image
+          name
+        }
       }
       nextToken
       startedAt
-      __typename
     }
   }
 `;

@@ -33,6 +33,23 @@ export const createLike = gql `
       _deleted
       _lastChangedAt
       __typename
+      Post {
+        id
+        nOfLikes
+        Likes {
+          items {
+            id 
+            _deleted
+            _version
+
+          }
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
     }
   }
 `;
@@ -82,6 +99,25 @@ export const deleteLike = gql `
       userID
       postID
 
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+
+export const updatePost = gql `
+  mutation UpdatePost(
+    $input: UpdatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    updatePost(input: $input, condition: $condition) {
+      id
+      nOfComments
+      nOfLikes
       createdAt
       updatedAt
       _version
