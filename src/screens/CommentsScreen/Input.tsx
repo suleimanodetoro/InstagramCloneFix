@@ -1,9 +1,16 @@
 import { StyleSheet, Text, View,Image, TextInput, Pressable } from 'react-native'
 import React,{useState} from 'react'
 import colors from '../../theme/colors'
-import { size, weight } from '../../theme/fonts'
+import { size, weight } from '../../theme/fonts';
+import { Post } from '../../API';
 
-const Input = () => {
+interface IInput {
+    postId: string;
+}
+
+const Input = ({postId}: IInput) => {
+    console.warn(postId);
+    
     const [newComment, setNewComment] = useState('')
 
 

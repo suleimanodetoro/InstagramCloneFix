@@ -9,8 +9,6 @@ import {
   Post,
   UpdatePostMutation,
   UpdatePostMutationVariables,
-  UsersByUsernameQuery,
-  UsersByUsernameQueryVariables,
 } from "../../API";
 import { useMutation, useQuery } from "@apollo/client";
 import {

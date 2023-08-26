@@ -10,12 +10,12 @@ type Like @model @auth(rules: [{ allow: public }]) {
   User: User @belongsTo(fields: ["userID"])
   Post: Post @belongsTo(fields: ["postID"])
 }
-
+# To filter the list of comments by post, you need to create an index. Good thing is we already have an index, we just need to add queryField and sortKey by postId
 type Comment @model @auth(rules: [{ allow: public }]) {
   id: ID!
   comment: String
   userID: ID! @index(name: "byUser")
-  postID: ID! @index(name: "byPost")
+  postID: ID! @index(name: "byPost", queryField: "commentsByPost")
   User: User @belongsTo(fields: ["userID"])
   Post: Post @belongsTo(fields: ["postID"])
 }

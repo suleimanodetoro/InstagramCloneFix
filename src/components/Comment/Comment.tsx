@@ -15,7 +15,7 @@ import { DEFAULT_USER_IMAGE } from '../../config';
 
 interface ICommentProps {
   comment: CommentType;
-  includeDetails: boolean; //Track if detailed comment screen items should rendered, or just normal texts (this is the case in home screen)
+  includeDetails?: boolean; //Track if detailed comment screen items should rendered, or just normal texts (this is the case in home screen)
 }
 
 const Comment = ({comment, includeDetails = false}: ICommentProps) => {

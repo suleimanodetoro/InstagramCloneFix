@@ -9,6 +9,7 @@ export type RootNavigatorParamList = {
   Comments: { postId: string };
   EditProfile: undefined;
 };
+export type CommentsRouteProp = RouteProp<RootNavigatorParamList, "Comments">
 // Auth Stack Navigator
 export type AuthStackNavigatorParamList = {
   "Sign in": undefined;
