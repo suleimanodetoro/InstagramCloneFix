@@ -64,12 +64,11 @@ const PostMenu = ({ post }: IPostMenu) => {
     navigation.navigate('UpdatePost', {id:post.id});
   };
   return (
-    <Menu renderer={renderers.SlideInMenu}>
+    <Menu renderer={renderers.SlideInMenu} style={styles.threeDots}>
       <MenuTrigger>
         <Entypo
           name={"dots-three-horizontal"}
           size={16}
-          style={styles.threeDots}
         />
       </MenuTrigger>
       <MenuOptions>
