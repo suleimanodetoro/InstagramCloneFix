@@ -21,6 +21,7 @@ export const getUser = gql `
             image
             images
             video
+            _deleted
         }
       }
       createdAt

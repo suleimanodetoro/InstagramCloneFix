@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, FlatList,Image } from 'react-native'
 import React from 'react'
 import { Post } from '../../API';
 import FeedGridItem from './FeedGridItem';
+
 interface IFeedGridView {
     data: (Post | null)[];
     ListHeaderComponent?: React.ComponentType<any> | React.ReactElement | null | undefined;

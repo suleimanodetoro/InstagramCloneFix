@@ -61,7 +61,7 @@ const ProfileScreen = () => {
     // To implement scroll down to refresh, you need to pass refetch to the feedgridview
 
     <FeedGridView
-      data={user.Posts?.items || []}
+      data={user.Posts?.items.filter(item => !item._deleted) || []}
       ListHeaderComponent={() => <ProfileHeader user={user} />}
       refetch={refetch}
       loading={loading}
