@@ -44,7 +44,7 @@ const HomeScreen = (props) => {
     
   }
   if (error) {
-    console.log('erorrrr occuredddd');
+    console.log('Error loading Post: HomeScreen ');
     
     return (<ApiErrorMessage title='Error fetching Post' message={error.message} onRetry={()=>refetch()}/>)
   };

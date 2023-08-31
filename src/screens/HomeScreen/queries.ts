@@ -21,7 +21,8 @@ export const listPosts = gql`
           username
           image
         }
-        Comments {
+        # Limit the comments displayed in feed post to two
+        Comments(limit: 2) {
           items {
             id
             comment
@@ -31,6 +32,8 @@ export const listPosts = gql`
               username
             }
           }
+          nextToken
+          startedAt
         }
         Likes {
           items {

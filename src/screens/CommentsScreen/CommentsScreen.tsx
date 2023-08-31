@@ -14,6 +14,7 @@ import { commentsByPost } from "./queries";
 import { CommentsByPostQuery, CommentsByPostQueryVariables } from "../../API";
 import { useQuery } from "@apollo/client";
 import ApiErrorMessage from "../../components/ApiErrorMessage/ApiErrorMessage";
+import CommentService from "../../services/CommentService/CommentService";
 
 const CommentsScreen = () => {
   const route = useRoute<CommentsRouteProp>();
@@ -34,6 +35,7 @@ const CommentsScreen = () => {
     <ApiErrorMessage title="Error fetching comments" message={error.message} />;
   }
   const comments = (data?.commentsByPost?.items  || []).filter(comment => !comment._deleted);
+
 
 
   return (
