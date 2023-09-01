@@ -57,7 +57,6 @@ const PostMenu = ({ post }: IPostMenu) => {
   };
   const startDeletingPost = async () => {
     const response = await doDeletePost();
-    console.log(response);
   };
 
   const onEditFunctionPress = () => {    

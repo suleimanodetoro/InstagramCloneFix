@@ -53,6 +53,7 @@ const CreatePostScreen = () => {
           //input needed gotten from build>schema.graphql in amplify folder
           //when creating a post you do not need to add version.
           input:{
+            type: "POST",
             description,
             image,
             images,
@@ -63,6 +64,7 @@ const CreatePostScreen = () => {
   
           }
         },
+        refetchQueries:["PostsByDate"]
       });
       console.log(response);
       //Go back to camera screen before navigating to homestack

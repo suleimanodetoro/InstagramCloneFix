@@ -51,7 +51,6 @@ const Navigation = () => {
   const { user, userId } = useAuthContext();
   const {data, loading, error} = useQuery<GetUserQuery, GetUserQueryVariables>(getUser, {variables: {id:userId}});
   const userData = data?.getUser;
-  console.log(userData);
 
   /**
    * if user is undefined(default) show loading screen till useEffect is triggered from authcontext

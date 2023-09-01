@@ -13,6 +13,8 @@ import colors from '../../theme/colors';
 import { Comment as CommentType} from '../../API';
 import { DEFAULT_USER_IMAGE } from '../../config';
 import CommentService from '../../services/CommentService/CommentService';
+import dayjs from 'dayjs';
+
 
 interface ICommentProps {
   comment: CommentType;
@@ -20,6 +22,7 @@ interface ICommentProps {
 }
 
 const Comment = ({comment, includeDetails = false}: ICommentProps) => {
+  
   const {onDeleteOptionPressed} = CommentService(comment.postID, comment.id, comment._version);
   const [isLiked, setLikeState] = useState(false);
   const toggleLike = () => {
@@ -43,12 +46,12 @@ const Comment = ({comment, includeDetails = false}: ICommentProps) => {
         {includeDetails && (
           <>
           <View style={styles.footer}>
-            <Text style={styles.footerText}>2d</Text>
+            <Text style={styles.footerText}>{dayjs(comment.createdAt).fromNow()}</Text>
             <Text style={styles.footerText}>5 Likes</Text>
             <Text style={styles.footerText}>Reply</Text>
           </View>
           <View style={styles.footer}>
-              <Pressable style={styles.footerText} onPress={onDeleteOptionPressed}>
+              <Pressable style={styles.footerText} onPress={comment && onDeleteOptionPressed}>
                 <Text>Delete</Text>
               </Pressable>
           </View>

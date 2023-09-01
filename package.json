@@ -21,6 +21,7 @@
     "aws-amplify": "^5.3.3",
     "aws-appsync-auth-link": "^3.0.7",
     "aws-appsync-subscription-link": "^3.1.2",
+    "dayjs": "^1.11.9",
     "expo": "~48.0.18",
     "expo-camera": "~13.2.1",
     "expo-splash-screen": "~0.18.2",

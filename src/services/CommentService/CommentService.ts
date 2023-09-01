@@ -52,9 +52,9 @@ const CommentService = (postId: string, commentId?: string, _version?:number ) =
   const [doCreateComment] = useMutation<
     CreateCommentMutation,
     CreateCommentMutationVariables
-  >(createComment, { refetchQueries: ["CommentsByPost"] });
+  >(createComment);
 
-  const [doDeleteComment] = useMutation<
+  const [doDeleteComment, {loading: deleteLoading, error: deleteError}] = useMutation<
     DeleteCommentMutation,
     DeleteCommentMutationVariables
   >(deleteComment);
@@ -74,7 +74,7 @@ const CommentService = (postId: string, commentId?: string, _version?:number ) =
         },
         // From the query file, you cansee the name of the query responsible for for getting all comments
         //Refetch everytime a comment is created to update the display
-        refetchQueries: ["CommentsByPost", "ListPosts"],
+        refetchQueries: ["ListPosts"] 
       });
       manipulateCommentCount(1);
     } catch (error) {
@@ -83,7 +83,7 @@ const CommentService = (postId: string, commentId?: string, _version?:number ) =
   };
   //Alert on DELETE PRESSED
   const onDeleteOptionPressed = () => {
-    console.log('Delete comment called');
+    
     
     //Confirm the user actually wants to delete the post
     Alert.alert("Are you sure ?", "Deleting a comment is permernent.", [
@@ -101,6 +101,18 @@ const CommentService = (postId: string, commentId?: string, _version?:number ) =
 
   // delete comment
   const startDeletingComment = async () => {
+    if (deleteLoading) {
+      console.log('Still loading');
+      
+      
+    }
+    if (deleteError) {
+      console.log((deleteError as Error).message);
+      return;
+      
+      
+    }
+    //deleting now
     try {
       await doDeleteComment({
         variables: {
@@ -112,6 +124,7 @@ const CommentService = (postId: string, commentId?: string, _version?:number ) =
         refetchQueries: ["CommentsByPost"],
       });
       manipulateCommentCount(-1);
+      
     } catch (error) {
       Alert.alert("Error deleting comment", (error as Error).message);
     }

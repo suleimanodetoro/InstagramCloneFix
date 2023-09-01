@@ -11,7 +11,6 @@ import ApiErrorMessage from '../../components/ApiErrorMessage/ApiErrorMessage';
 const PostLikesScreen = () => {
     const route = useRoute<PostLikesRouteProp>();
     const {id}= route?.params;
-    console.log('post id',id);
     
     const {data, loading, error, refetch}= useQuery<LikesForPostByUserQuery,LikesForPostByUserQueryVariables>(LikesForPostByUser,{
         variables:{

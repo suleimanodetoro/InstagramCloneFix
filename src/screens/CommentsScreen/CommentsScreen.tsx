@@ -11,7 +11,7 @@ import Input from "./Input";
 import { useRoute } from "@react-navigation/native";
 import { CommentsRouteProp } from "../../types/navigation";
 import { commentsByPost } from "./queries";
-import { CommentsByPostQuery, CommentsByPostQueryVariables } from "../../API";
+import { CommentsByPostQuery, CommentsByPostQueryVariables, ModelSortDirection } from "../../API";
 import { useQuery } from "@apollo/client";
 import ApiErrorMessage from "../../components/ApiErrorMessage/ApiErrorMessage";
 import CommentService from "../../services/CommentService/CommentService";
@@ -25,6 +25,7 @@ const CommentsScreen = () => {
   >(commentsByPost, {
     variables: {
       postID: postId,
+      sortDirection: ModelSortDirection.DESC
     },
     errorPolicy: "all",
   });
@@ -34,9 +35,9 @@ const CommentsScreen = () => {
   if (error) {
     <ApiErrorMessage title="Error fetching comments" message={error.message} />;
   }
-  const comments = (data?.commentsByPost?.items  || []).filter(comment => !comment._deleted);
-
-
+  const comments = (data?.commentsByPost?.items || []).filter(
+    (comment) => !comment._deleted
+  );
 
   return (
     <View style={{ flex: 1 }}>
@@ -44,7 +45,7 @@ const CommentsScreen = () => {
         data={comments}
         renderItem={({ item }) => <Comment comment={item} includeDetails />}
         style={{ padding: 10 }}
-        ListEmptyComponent={()=> <Text>No comments here yet🤔</Text>}
+        ListEmptyComponent={() => <Text>No comments here yet🤔</Text>}
       />
 
       {/* Comment text field only visible in comment screen */}

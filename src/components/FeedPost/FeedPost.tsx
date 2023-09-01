@@ -19,6 +19,8 @@ import { FeedNavigationProp } from "../../types/navigation";
 import { DEFAULT_USER_IMAGE } from "../../config";
 
 import PostMenu from "./PostMenu";
+import dayjs from 'dayjs';
+
 
 import { useAuthContext } from "../../contexts/AuthContext";
 import useLikeService from "../../services/LikeService/LikeService";
@@ -122,6 +124,7 @@ const FeedPost = (props: IFeedPost) => {
             size={24}
             style={styles.icon}
             color={colors.black}
+            onPress={navigateToComments}
           />
           <Feather
             name="send"
@@ -176,12 +179,14 @@ const FeedPost = (props: IFeedPost) => {
         <Text onPress={navigateToComments} style={{ color: "grey" }}>
           View all {post.nOfComments} comments
         </Text>
-        {(post.Comments?.items || []).map(
-          (comment) => comment && <Comment key={comment.id} comment={comment} />
-        )}
+        {/* Select first two results from map with slice */}
+        {(post.Comments?.items || []).filter(comment => !comment._deleted).slice(0, 2).map(
+  (comment) => comment && <Comment key={comment.id} comment={comment} />
+)}
+
 
         {/* Posted Date */}
-        <Text style={{ color: "grey" }}>{post.createdAt}</Text>
+        <Text style={{ color: "grey" }}>{dayjs(post.createdAt).fromNow()}</Text>
       </View>
     </View>
   );

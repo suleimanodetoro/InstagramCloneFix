@@ -38,7 +38,7 @@ const SignInScreen = () => {
     try {
       await Auth.signIn(username, password);
     } catch (error) {
-      console.log('errorrrr');
+      Alert.alert('Sing in failed')
       
       if ((error as Error).name === 'UserNotConfirmedException') {
         navigation.navigate('Confirm email', {username})

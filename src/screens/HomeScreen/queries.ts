@@ -1,11 +1,22 @@
 import { gql } from "@apollo/client";
-export const listPosts = gql`
-  query ListPosts(
+
+export const postsByDate = gql `
+  query PostsByDate(
+    $type: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
     $filter: ModelPostFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    postsByDate(
+      type: $type
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
         description
@@ -22,10 +33,11 @@ export const listPosts = gql`
           image
         }
         # Limit the comments displayed in feed post to two
-        Comments(limit: 2) {
+        Comments(filter: { _deleted: { ne: true } }) {
           items {
             id
             comment
+            _deleted
             User {
               id
               name

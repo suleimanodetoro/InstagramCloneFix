@@ -12,16 +12,20 @@ import FeedPost from '../../components/FeedPost/FeedPost';
  * Instead of of using AppSync library, use the apollo library gql
  */
 import {useQuery} from '@apollo/client';
-import { listPosts } from './queries';
-import { ListPostsQuery, ListPostsQueryVariables } from '../../API';
+import { postsByDate } from './queries';
+import { ModelSortDirection, PostsByDateQuery, PostsByDateQueryVariables } from '../../API';
 import ApiErrorMessage from '../../components/ApiErrorMessage/ApiErrorMessage';
 
 
 
 const HomeScreen = (props) => {
   const [activePostId, setActivePostId] = useState < string | null > (null);
-  const {data, loading, error, refetch} = useQuery<ListPostsQuery,ListPostsQueryVariables >(listPosts, {
+  const {data, loading, error, refetch} = useQuery<PostsByDateQuery,PostsByDateQueryVariables >(postsByDate, {
     errorPolicy: 'all',
+    variables:{
+      type:"POST",
+      sortDirection: ModelSortDirection.DESC,
+    }
   });
 
   const viewabilityConfig: ViewabilityConfig = {
@@ -50,7 +54,8 @@ const HomeScreen = (props) => {
   };
   
   //Filter deleted posts
-  const posts = (data?.listPosts?.items).filter(post => !post?._deleted) || [];
+  const posts = (data?.postsByDate?.items).filter(post => !post?._deleted ) || [];
+  
   
 
   return (

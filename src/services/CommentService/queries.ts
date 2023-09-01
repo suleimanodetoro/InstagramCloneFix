@@ -17,16 +17,16 @@ export const updatePost = gql `
     }
   }
 `;
-export const commentsByPost = gql`
-  query CommentsByPost(
-    $postID: ID!
+export const commentsByUserID = gql `
+  query CommentsByUserID(
+    $userID: ID!
     $sortDirection: ModelSortDirection
     $filter: ModelCommentFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    commentsByPost(
-      postID: $postID
+    commentsByUserID(
+      userID: $userID
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -118,40 +118,41 @@ export const deleteComment = gql `
       comment
       userID
       postID
-      User {
-        id
-        name
-        image
-        bio
-        username
-        website
-        nOfFollowings
-        nOfFollowers
-        nOfPosts
-        email
-        Posts {
-          nextToken
-          startedAt
-          __typename
-        }
-        Comments {
-          nextToken
-          startedAt
-          __typename
-        }
-        Likes {
-          nextToken
-          startedAt
-          __typename
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        __typename
-      }
-      Post {
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const deletePost = gql `
+  mutation DeletePost(
+    $input: DeletePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    deletePost(input: $input, condition: $condition) {
+      id
+      userID
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+
+export const listPosts = gql`
+  query ListPosts(
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
         id
         description
         image
@@ -163,30 +164,35 @@ export const deleteComment = gql `
         User {
           id
           name
-          image
-          bio
           username
-          website
-          nOfFollowings
-          nOfFollowers
-          nOfPosts
-          email
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
+          image
+        }
+        # Limit the comments displayed in feed post to two
+        Comments(filter: { _deleted: { ne: true } }) {
+          items {
+            id
+            comment
+            _deleted
+            User {
+              id
+              name
+              username
+            }
+          }
+          nextToken
+          startedAt
         }
         Likes {
+          items {
+            id
+            _deleted
+            User {
+              id
+              username
+            }
+          }
           nextToken
           startedAt
-          __typename
-        }
-        Comments {
-          nextToken
-          startedAt
-          __typename
         }
         createdAt
         updatedAt
@@ -195,11 +201,8 @@ export const deleteComment = gql `
         _lastChangedAt
         __typename
       }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
+      nextToken
+      startedAt
       __typename
     }
   }
