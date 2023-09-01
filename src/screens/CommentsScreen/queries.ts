@@ -232,6 +232,7 @@ export const commentsByPost = gql`
     $limit: Int
     $nextToken: String
   ) {
+    # From here is what you'll use to edit apollo client file for fetchMore request
     commentsByPost(
       postID: $postID
       sortDirection: $sortDirection

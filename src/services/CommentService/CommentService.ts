@@ -9,6 +9,7 @@ import {
   DeleteCommentMutationVariables,
   GetPostQuery,
   GetPostQueryVariables,
+  ModelSortDirection,
   Post,
   UpdatePostMutation,
   UpdatePostMutationVariables,
@@ -36,10 +37,10 @@ const CommentService = (postId: string, commentId?: string, _version?:number ) =
     variables: { id: postId },
     errorPolicy: "all",
   });
-  const { data: commentData } = useQuery<
+  const { data: commentData, error: queryError } = useQuery<
     CommentsByPostQuery,
     CommentsByPostQueryVariables
-  >(commentsByPost, { variables: { postID: postId } });
+  >(commentsByPost, { variables: { postID: postId,sortDirection: ModelSortDirection.DESC } });
 
   const post = postData?.getPost;
   //function to use updatePost mutation to increae/decrese comment count
@@ -74,7 +75,16 @@ const CommentService = (postId: string, commentId?: string, _version?:number ) =
         },
         // From the query file, you cansee the name of the query responsible for for getting all comments
         //Refetch everytime a comment is created to update the display
-        refetchQueries: ["ListPosts"] 
+        // Add the refetchQueries option to refetch the comments with the desired sort direction
+      refetchQueries: [
+        {
+          query: commentsByPost,
+          variables: {
+            postID: postId,
+            sortDirection: ModelSortDirection.ASC, // Specify your desired sort direction here
+          } as CommentsByPostQueryVariables,
+        },
+      ],
       });
       manipulateCommentCount(1);
     } catch (error) {

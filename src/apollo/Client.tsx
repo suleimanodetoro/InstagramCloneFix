@@ -11,6 +11,7 @@ import {
   gql,
   ApolloLink,
   createHttpLink,
+  TypePolicies,
 } from "@apollo/client";
 
 //Import earlier installed packages for using aws appsync with client
@@ -42,9 +43,37 @@ const link = ApolloLink.from([
        createAuthLink({url, region, auth}),
        createSubscriptionHandshakeLink({url, region, auth}, httpLink) //second part needs the type of protocol to communicate
 ]);
+//Merge List to pass two properties: existing: first query payload, and incoming: second query payload
+const mergeLists = (existing = {items: []}, incoming = {items: []}) => {
+  return {
+    ...existing,
+    ...incoming,
+    // combine incoming and existing.
+    items: [...(existing.items || []), ...incoming.items],
+  };
+};
+//Create Object type policies for comment screen cache by @suleimanodetoro
+const typePolicies: TypePolicies = {
+  // Fetching infinitely when no comments exist
+  Query: {
+    fields: {
+      //Policy for loading more comments
+      commentsByPost: {
+        //Take all items except the fields responsible for pagination
+        keyArgs: ['postID', 'createdAt', 'sortDirection', 'filter'],
+        merge: mergeLists,
+      },
+      //Policy for loading more posts
+      postsByDate: {
+        keyArgs: ['type', 'createdAt', 'sortDirection', 'filter'],
+        merge: mergeLists,
+      },
+    },
+  },
+};
 const client = new ApolloClient({
   link, //Use link instea dof providing url directly to client
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({typePolicies}),
 });
 const Client = ({ children }: IClient) => {
   return <ApolloProvider client={client}>{children}</ApolloProvider>;

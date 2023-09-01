@@ -17,16 +17,18 @@ export const updatePost = gql `
     }
   }
 `;
-export const commentsByUserID = gql `
-  query CommentsByUserID(
-    $userID: ID!
+export const commentsByPost = gql`
+  query CommentsByPost(
+    $postID: ID!
+    $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelCommentFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    commentsByUserID(
-      userID: $userID
+    commentsByPost(
+      postID: $postID
+      createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit

@@ -20,11 +20,13 @@ import ApiErrorMessage from '../../components/ApiErrorMessage/ApiErrorMessage';
 
 const HomeScreen = (props) => {
   const [activePostId, setActivePostId] = useState < string | null > (null);
-  const {data, loading, error, refetch} = useQuery<PostsByDateQuery,PostsByDateQueryVariables >(postsByDate, {
+  const [isFetchingMore, setIsFetching] = useState(false);
+  const {data, loading, error, refetch, fetchMore} = useQuery<PostsByDateQuery,PostsByDateQueryVariables >(postsByDate, {
     errorPolicy: 'all',
     variables:{
       type:"POST",
       sortDirection: ModelSortDirection.DESC,
+      limit:1
     }
   });
 
@@ -55,7 +57,25 @@ const HomeScreen = (props) => {
   
   //Filter deleted posts
   const posts = (data?.postsByDate?.items).filter(post => !post?._deleted ) || [];
-  
+  const nextToken = data?.postsByDate?.nextToken;
+  const loadMorePost = async () =>{
+    try {
+      if (!nextToken || isFetchingMore) {
+        return;
+      }
+
+      setIsFetching(true);
+
+      console.log('Loading more posts');
+      await fetchMore({variables:{nextToken}})
+      
+    } catch (error) {
+      console.log('Error occured while paging feed posts',(error as Error).message);  
+    } finally {
+      setIsFetching(false);
+    }
+     
+  }
   
 
   return (
@@ -72,6 +92,7 @@ const HomeScreen = (props) => {
       showsVerticalScrollIndicator={false}
       viewabilityConfig={viewabilityConfig}
       onViewableItemsChanged={onViewableItemsChanged.current}
+      onEndReached={loadMorePost}
     />
     </SafeAreaView>
   );
