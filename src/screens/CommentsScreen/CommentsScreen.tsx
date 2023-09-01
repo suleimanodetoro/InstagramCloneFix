@@ -10,13 +10,13 @@ import Comment from "../../components/Comment/";
 import Input from "./Input";
 import { useRoute } from "@react-navigation/native";
 import { CommentsRouteProp } from "../../types/navigation";
-import { commentsByPost } from "./queries";
+import { commentsByPost, onCreateComment } from "./queries";
 import {
   CommentsByPostQuery,
   CommentsByPostQueryVariables,
   ModelSortDirection,
 } from "../../API";
-import { useQuery } from "@apollo/client";
+import { useQuery, useSubscription } from "@apollo/client";
 import ApiErrorMessage from "../../components/ApiErrorMessage/ApiErrorMessage";
 import CommentService from "../../services/CommentService/CommentService";
 
@@ -36,6 +36,8 @@ const CommentsScreen = () => {
     },
     errorPolicy: "all",
   });
+  //Create subscription to have the comment screen display real time data
+  const {data: commentSubData, error: commentSubError, loading:commentSubLoadingState} = useSubscription(onCreateComment);
 
   // implement lloading state for fetch more function
   const [isFetchingMore, setFetchingMore] = useState(false);

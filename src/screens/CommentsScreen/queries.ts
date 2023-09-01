@@ -270,3 +270,42 @@ export const commentsByPost = gql`
     }
   }
 `;
+
+//subscription for real time data in comments screen
+//The fields we are querying back should be a subset of the fields we get when running a mutation (See commentservice onCreateComment)
+export const onCreateComment = gql`
+  subscription OnCreateComment($filter: ModelSubscriptionCommentFilterInput) {
+    onCreateComment(filter: $filter) {
+      id
+      comment
+      userID
+      postID
+      Post {
+        id
+        description
+        nOfComments
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      # After copying from identical query from comment service, add user details because its needed to render a comment
+      # This means you need to add it the comment service file too. They need to be identical...
+      User {
+        id
+        image
+        username
+        name
+
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
