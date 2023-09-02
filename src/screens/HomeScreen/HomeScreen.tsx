@@ -58,6 +58,7 @@ const HomeScreen = (props) => {
   //Filter deleted posts
   const posts = (data?.postsByDate?.items).filter(post => !post?._deleted ) || [];
   const nextToken = data?.postsByDate?.nextToken;
+  //Helper function to load more post items as you scroll
   const loadMorePost = async () =>{
     try {
       if (!nextToken || isFetchingMore) {
