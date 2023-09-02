@@ -138,7 +138,7 @@ type EagerUser = {
   readonly nOfFollowings: number;
   readonly nOfFollowers: number;
   readonly nOfPosts: number;
-  readonly email: string;
+  readonly email?: string | null;
   readonly Posts?: (Post | null)[] | null;
   readonly Comments?: (Comment | null)[] | null;
   readonly Likes?: (Like | null)[] | null;
@@ -160,7 +160,7 @@ type LazyUser = {
   readonly nOfFollowings: number;
   readonly nOfFollowers: number;
   readonly nOfPosts: number;
-  readonly email: string;
+  readonly email?: string | null;
   readonly Posts: AsyncCollection<Post>;
   readonly Comments: AsyncCollection<Comment>;
   readonly Likes: AsyncCollection<Like>;

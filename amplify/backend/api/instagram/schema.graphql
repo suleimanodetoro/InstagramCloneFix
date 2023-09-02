@@ -1,5 +1,8 @@
 # Change from public to private to enamble me change authurization with => amplify update api
-type Like @model @auth(rules: [{ allow: private }]) {
+# We need private rules only for read operations, then allow owner of data to write, update, and, delete
+type Like
+  @model
+  @auth(rules: [{ allow: private, operations: [read] }, { allow: owner }]) {
   id: ID!
   userID: ID! @index(name: "byUser")
   postID: ID!
@@ -12,7 +15,9 @@ type Like @model @auth(rules: [{ allow: private }]) {
   Post: Post @belongsTo(fields: ["postID"])
 }
 # To filter the list of comments by post, you need to create an index. Good thing is we already have an index, we just need to add queryField and sortKey by postId
-type Comment @model @auth(rules: [{ allow: private }]) {
+type Comment
+  @model
+  @auth(rules: [{ allow: private, operations: [read] }, { allow: owner }]) {
   id: ID!
   # Add createdAt to sort comments by date they were created. Add to sortKeyFields
   createdAt: AWSDateTime!
@@ -29,7 +34,9 @@ type Comment @model @auth(rules: [{ allow: private }]) {
   Post: Post @belongsTo(fields: ["postID"])
 }
 
-type Post @model @auth(rules: [{ allow: private }]) {
+type Post
+  @model
+  @auth(rules: [{ allow: private, operations: [read] }, { allow: owner }]) {
   id: ID!
   # Add createdAt
   createdAt: AWSDateTime!
@@ -53,7 +60,9 @@ type Post @model @auth(rules: [{ allow: private }]) {
   Comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
 }
 
-type User @model @auth(rules: [{ allow: private }]) {
+type User
+  @model
+  @auth(rules: [{ allow: private, operations: [read] }, { allow: owner }]) {
   id: ID!
   name: String!
   image: String
@@ -64,7 +73,9 @@ type User @model @auth(rules: [{ allow: private }]) {
   nOfFollowings: Int!
   nOfFollowers: Int!
   nOfPosts: Int!
-  email: String!
+  # Add auth rule to email to disallow everyone from seeing the email. Only owner of the email
+  # Apparently i need to make email nullable?
+  email: String @auth(rules: [{ allow: owner }])
   Posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
   Comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
   Likes: [Like] @hasMany(indexName: "byUser", fields: ["id"])

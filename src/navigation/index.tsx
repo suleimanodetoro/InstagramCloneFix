@@ -23,6 +23,7 @@ import { useAuthContext } from "../contexts/AuthContext";
 import { useQuery } from "@apollo/client";
 import { getUser } from "./queries";
 import { GetUserQuery, GetUserQueryVariables } from "../API";
+import ApiErrorMessage from "../components/ApiErrorMessage/ApiErrorMessage";
 
 const Stack = createNativeStackNavigator<RootNavigatorParamList>(); //This will return an object that contains Navigator and screen
 
@@ -65,6 +66,7 @@ const Navigation = () => {
       </View>
     );
   }
+  
 
   let stackScreens = null;
   //Check if user is false (kinda null haha) then navigate to root in authstack which is login screen

@@ -102,6 +102,8 @@ exports.handler = async (event, context) => {
   const { sub, name, email } = event.request.userAttributes;
   const newUser = {
     id: sub,
+    //Add owner field after adding new authorization rules
+    owner: sub,
     name: name,
     email: email,
     nOfPosts: 0,
