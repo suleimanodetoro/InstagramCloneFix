@@ -68,3 +68,12 @@ type User @model @auth(rules: [{ allow: public }]) {
   Comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
   Likes: [Like] @hasMany(indexName: "byUser", fields: ["id"])
 }
+# Add new type for subsciptions
+type Subscription {
+  # monitor anytime a comment is ccreated under a certain post
+  # Will be used in comment screen...
+  # The return type will Comment, @aws_subscribe to define that it is a subscription
+  # Provide the mutation (remember from the comment service screen? => commentService create mutation)
+  onCreateCommentByPostId(postID: ID!): Comment
+    @aws_subscribe(mutations: ["createComment"])
+}
