@@ -5,16 +5,19 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Comment from "../../components/Comment/";
 import Input from "./Input";
 import { useRoute } from "@react-navigation/native";
 import { CommentsRouteProp } from "../../types/navigation";
-import { commentsByPost, onCreateComment } from "./queries";
+import { commentsByPost, onCreateCommentByPostId } from "./queries";
 import {
+  Comment as CommentType,
   CommentsByPostQuery,
   CommentsByPostQueryVariables,
   ModelSortDirection,
+  OnCreateCommentByPostIdSubscription,
+  OnCreateCommentByPostIdSubscriptionVariables,
 } from "../../API";
 import { useQuery, useSubscription } from "@apollo/client";
 import ApiErrorMessage from "../../components/ApiErrorMessage/ApiErrorMessage";
@@ -23,6 +26,10 @@ import CommentService from "../../services/CommentService/CommentService";
 const CommentsScreen = () => {
   const route = useRoute<CommentsRouteProp>();
   const { postId } = route?.params;
+  //state to keep track of newly created posts
+  const [newComment, setNewComment] = useState<CommentType[]>([]);
+  
+
   //Add fetch More to Implement pagination, to load more pages
   const { data, loading, error, fetchMore } = useQuery<
     CommentsByPostQuery,
@@ -37,7 +44,16 @@ const CommentsScreen = () => {
     errorPolicy: "all",
   });
   //Create subscription to have the comment screen display real time data
-  const {data: commentSubData, error: commentSubError, loading:commentSubLoadingState} = useSubscription(onCreateComment);
+  const {data: newCommentSubscriptionData, error: commentSubError, loading:commentSubLoadingState} = useSubscription<OnCreateCommentByPostIdSubscription,OnCreateCommentByPostIdSubscriptionVariables>(onCreateCommentByPostId, {variables:{postID: postId}});
+
+    // useEffect to store the comment everytime new Comment Updates
+    useEffect(() => {
+      
+      if (newCommentSubscriptionData?.onCreateCommentByPostId) {
+        setNewComment((existingComments)=>([(newCommentSubscriptionData.onCreateCommentByPostId as CommentType),...existingComments]))
+        
+      }
+    }, [newCommentSubscriptionData])
 
   // implement lloading state for fetch more function
   const [isFetchingMore, setFetchingMore] = useState(false);
@@ -59,7 +75,6 @@ const CommentsScreen = () => {
     if (!nextToken || isFetchingMore) {
       console.log('Next token not available');
       return;
-      
     }
     try {
       //This on its own won't be enough. You will need to edit client apollo file so it treat merges certain cached data.
@@ -76,7 +91,7 @@ const CommentsScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <FlatList
-        data={comments}
+        data={[...newComment,...comments]}
         renderItem={({ item }) => <Comment comment={item} includeDetails />}
         style={{ padding: 10 }}
         ListEmptyComponent={() => <Text>No comments here yet🤔</Text>}

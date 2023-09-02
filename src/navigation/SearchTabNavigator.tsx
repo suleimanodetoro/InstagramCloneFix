@@ -18,7 +18,6 @@ const SearchTabNavigator = () => {
     return (
         <Tab.Navigator screenOptions={{ tabBarStyle: { paddingTop: insets.top }, tabBarIndicatorStyle:{backgroundColor: colors.accent} }}>
             <Tab.Screen name="Users" component={UserSearchScreen} />
-            <Tab.Screen name="Posts" component={CommentsScreen} />
         </Tab.Navigator>
 
 

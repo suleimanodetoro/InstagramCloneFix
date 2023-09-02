@@ -15,19 +15,22 @@ import { ListUsersQuery, ListUsersQueryVariables } from "../../API";
 
 const UserSearchScreen = () => {
   const { data, error, loading, refetch } = useQuery<
-    ListUsersQuery | ListUsersQueryVariables
+    ListUsersQuery, ListUsersQueryVariables
   >(listUsers);
   if (loading) {
     return <ActivityIndicator />;
   }
   if (error) {
-    <ApiErrorMessage
+    return (
+      <ApiErrorMessage
       title={"User search failed, please retry"}
       message={error.message}
-    />;
+    />
+    )
   }
   //Get users in databse but also filter out softdeleted users
   const users = (data?.listUsers?.items).filter(user => user && !user._deleted) || [];
+  
   return (
     <FlatList
       data={users}

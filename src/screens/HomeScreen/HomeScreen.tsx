@@ -61,11 +61,11 @@ const HomeScreen = (props) => {
   const loadMorePost = async () =>{
     try {
       if (!nextToken || isFetchingMore) {
+        console.log('No more posts !!');
+        
         return;
       }
-
       setIsFetching(true);
-
       console.log('Loading more posts');
       await fetchMore({variables:{nextToken}})
       
@@ -88,7 +88,7 @@ const HomeScreen = (props) => {
       renderItem={({item}) => item && <FeedPost post={item} isVisible={activePostId === item.id} />}
       onRefresh={() => refetch()}
       refreshing={loading}
-      keyExtractor={item => `post-${item.createdAt}-${item.id}`}
+      keyExtractor={(item, index) => `post-${item.createdAt}-${item.id}-${index}`}
       showsVerticalScrollIndicator={false}
       viewabilityConfig={viewabilityConfig}
       onViewableItemsChanged={onViewableItemsChanged.current}

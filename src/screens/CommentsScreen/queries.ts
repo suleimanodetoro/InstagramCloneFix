@@ -273,9 +273,9 @@ export const commentsByPost = gql`
 
 //subscription for real time data in comments screen
 //The fields we are querying back should be a subset of the fields we get when running a mutation (See commentservice onCreateComment)
-export const onCreateComment = gql`
-  subscription OnCreateComment($filter: ModelSubscriptionCommentFilterInput) {
-    onCreateComment(filter: $filter) {
+export const onCreateCommentByPostId = gql `
+  subscription OnCreateCommentByPostId($postID: ID!) {
+    onCreateCommentByPostId(postID: $postID) {
       id
       comment
       userID
