@@ -24,6 +24,7 @@ import dayjs from 'dayjs';
 
 import { useAuthContext } from "../../contexts/AuthContext";
 import useLikeService from "../../services/LikeService/LikeService";
+import Content from "./Content";
 
 interface IFeedPost {
   post: Post;
@@ -62,29 +63,7 @@ const FeedPost = (props: IFeedPost) => {
     });
   };
 
-  let content = null;
-  if (post.image) {
-    content = (
-      <DoublePressable onDoublePress={toggleLikeState}>
-        <Image
-          source={{
-            uri: post.image,
-          }}
-          style={styles.image}
-        />
-      </DoublePressable>
-    );
-  } else if (post.images) {
-    content = <Carousel images={post.images} onDoublePress={toggleLikeState} />;
-  } else if (post.video) {
-    content = (
-      <VideoPlayer
-        uri={post.video}
-        paused={!isVisible}
-        onDoublePress={toggleLikeState}
-      />
-    );
-  }
+  
 
   return (
     <View style={styles.post}>
@@ -105,7 +84,7 @@ const FeedPost = (props: IFeedPost) => {
 
       {/* Content */}
 
-      {content}
+      <Content post={post} isVisible={isVisible} />
 
       {/* Footer */}
       <View style={styles.footer}>
