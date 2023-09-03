@@ -7,6 +7,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 const flashModes = [FlashMode.off, FlashMode.on, FlashMode.auto, FlashMode.torch];
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { CameraNavigationProp } from '../../types/navigation';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 const flashModeToIcon = {
   [FlashMode.off]: 'flash-off',
@@ -42,6 +43,7 @@ const CameraScreen = () => {
       base64: true,
       skipProcessing: true,
     };
+    //
     try {
       console.warn('picture taken');
       const result = await camera.current.takePictureAsync(options);
@@ -50,6 +52,7 @@ const CameraScreen = () => {
       console.log('error');
     }
   };
+
   //function to handle video recording
   const startRecording = async () => {
     const options: CameraRecordingOptions = {
@@ -83,6 +86,24 @@ const CameraScreen = () => {
   const navigateToCreateScreen = () => {
     navigation.navigate("Create", {image:"https://images.pexels.com/photos/443356/pexels-photo-443356.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"})
   }
+  // On execution, open image library to select media.
+  const openImageGallery = () => {
+    console.log('Opening library...');
+    
+    launchImageLibrary(
+      {mediaType: 'photo'},
+      ({didCancel, errorCode, assets}) => {
+        if (!didCancel && !errorCode && assets && assets.length > 0) {
+          if (assets.length == 1) {
+            navigation.navigate("Create", {image:assets[0].uri})
+          }
+
+          console.log(assets);
+          
+        }
+      },
+    );
+  };
 
   useEffect(() => {
     const getPermissions = async () => {
@@ -116,7 +137,10 @@ const CameraScreen = () => {
       </View>
 
       <View style={[styles.buttonContainer, { bottom: 25 }]}>
+        <Pressable onPress={openImageGallery}>
         <MaterialIcons name='photo-library' size={24} color={colors.white} />
+
+        </Pressable>
         <Pressable delayLongPress={100} onPress={takePicture} onLongPress={startRecording} onPressOut={stopRecording}>
           <View style={isRecording ? styles.recordingCircle : styles.circle} />
 

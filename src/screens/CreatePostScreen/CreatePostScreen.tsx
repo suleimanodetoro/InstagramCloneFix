@@ -11,6 +11,7 @@ import { CreatePostInput, CreatePostMutation, CreatePostMutationVariables } from
 import { useAuthContext } from '../../contexts/AuthContext';
 import Carousel from '../../components/Carousel/Carousel';
 import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
+import { Storage } from 'aws-amplify';
 
 
 
@@ -47,23 +48,31 @@ const CreatePostScreen = () => {
   const [doCreatePost] = useMutation<CreatePostMutation, CreatePostMutationVariables>(createPost);
 
   const submit = async () => {
+    //create input variable
+    const input: CreatePostInput = {
+      type: "POST",
+      description,
+      //Will initially be set as undefined, but s3 keys will be assigned later
+      //keys will then be used to access media
+      image: undefined,
+      images: undefined,
+      video: undefined,
+      nOfComments:0,
+      nOfLikes: 0,
+      userID: userId,
+
+    };
+    //check if image exists
+    if (image) {
+      //upload the media file to S3 and get the key using helper function defined below
+    const imageKey = await uploadMedia(image);
+    input.image = imageKey;
+      
+    }
+    
     try {
       const response = await doCreatePost({
-        variables:{
-          //input needed gotten from build>schema.graphql in amplify folder
-          //when creating a post you do not need to add version.
-          input:{
-            type: "POST",
-            description,
-            image,
-            images,
-            video,
-            nOfComments:0,
-            nOfLikes: 0,
-            userID: userId,
-  
-          }
-        },
+        variables:{ input},
         refetchQueries:["PostsByDate"]
       });
       console.log(response);
@@ -76,6 +85,27 @@ const CreatePostScreen = () => {
       
     }
     
+  }
+  //upload media function
+  const uploadMedia = async (uri: string) => {
+    try {
+      //Get file converted to blob format
+      const response = await fetch(uri);
+      const blob = await response.blob()
+
+      //Upload blob format of file to S3
+      const s3Response = await Storage.put("image.png",blob);
+      console.log(s3Response);
+      return s3Response.key;
+
+      
+
+      
+    } catch (error) {
+      Alert.alert((error as Error).message)
+      
+    }
+
   }
   
   return (
