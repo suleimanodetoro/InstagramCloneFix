@@ -19,6 +19,7 @@ const CreatePostScreen = () => {
   //get signed in user from auth context
   const {userId} = useAuthContext();
   const [description, setDescription]= useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigation = useNavigation<CreateNavigationProp>();
   const route = useRoute<CreateRouteProp>();
@@ -48,6 +49,11 @@ const CreatePostScreen = () => {
   const [doCreatePost] = useMutation<CreatePostMutation, CreatePostMutationVariables>(createPost);
 
   const submit = async () => {
+    // return if already submitting
+    if (isSubmitting) {
+      return;
+    }
+    setIsSubmitting(true);
     //create input variable
     const input: CreatePostInput = {
       type: "POST",
@@ -76,11 +82,14 @@ const CreatePostScreen = () => {
         refetchQueries:["PostsByDate"]
       });
       console.log(response);
+      // Set submitting state to false before leaving screen
+      setIsSubmitting(false);
       //Go back to camera screen before navigating to homestack
       navigation.popToTop();
       navigation.navigate('HomeStack');
       
     } catch (error) {
+      setIsSubmitting(false);
       Alert.alert('Error uploading post...',(error as Error).message)
       
     }
@@ -117,7 +126,7 @@ const CreatePostScreen = () => {
       
       <TextInput multiline value={description} onChangeText={setDescription} placeholder='Description...' style={styles.input}/>
 
-      <Button text={'Submit'} onPress={submit}/>
+      <Button text={isSubmitting ? 'Submiting...' : 'Submit' } onPress={submit}/>
     </View>
   )
 }
