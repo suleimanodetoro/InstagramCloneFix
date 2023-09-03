@@ -1,4 +1,6 @@
 import Navigation from "./src/navigation";
+//To enable uuid work fine...
+import 'react-native-get-random-values'
 
 import {Button} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
