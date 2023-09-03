@@ -47,7 +47,7 @@ const CameraScreen = () => {
     try {
       console.warn('picture taken');
       const result = await camera.current.takePictureAsync(options);
-      navigateToCreateScreen();
+      navigation.navigate("Create", {image:result.uri})
     } catch (error) {
       console.log('error');
     }

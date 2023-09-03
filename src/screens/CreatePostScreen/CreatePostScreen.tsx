@@ -12,6 +12,8 @@ import { useAuthContext } from '../../contexts/AuthContext';
 import Carousel from '../../components/Carousel/Carousel';
 import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
 import { Storage } from 'aws-amplify';
+import {v4 as uuidv4} from 'uuid'
+
 
 
 
@@ -101,9 +103,13 @@ const CreatePostScreen = () => {
       //Get file converted to blob format
       const response = await fetch(uri);
       const blob = await response.blob()
+      //To get the file's extension, get the '.' in the uri 
+      const uriParts = uri.split('.');
+      //because uri might contain multiple dots, get the last one
+      const extension = uriParts[uriParts.length -1]
 
       //Upload blob format of file to S3
-      const s3Response = await Storage.put("image.png",blob);
+      const s3Response = await Storage.put(`${uuidv4()}.${extension}`,blob);
       console.log(s3Response);
       return s3Response.key;
 
