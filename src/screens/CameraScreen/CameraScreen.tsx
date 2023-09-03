@@ -8,6 +8,8 @@ const flashModes = [FlashMode.off, FlashMode.on, FlashMode.auto, FlashMode.torch
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { CameraNavigationProp } from '../../types/navigation';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { useWindowDimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const flashModeToIcon = {
   [FlashMode.off]: 'flash-off',
@@ -22,6 +24,8 @@ const CameraScreen = () => {
   const [flash, setFlash] = useState(FlashMode.off);
   const [isCameraReady, setCameraToReady] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+
+  const insets = useSafeAreaInsets();
 
   const camera = useRef<Camera>(null);
   //Anotate it the naviagtion hook with the cameraprop create from the param list
@@ -128,7 +132,7 @@ const CameraScreen = () => {
     <View style={styles.page}>
       <Camera ref={camera} style={styles.camera} type={cameraType} flashMode={flash} onCameraReady={() => setCameraToReady(true)} />
 
-      <View style={[styles.buttonContainer, { top: 25 }]}>
+      <View style={[styles.buttonContainer, { top: insets.top +20 }]}>
         <MaterialIcons name='close' size={24} color={colors.white} />
         <Pressable onPress={changeFlash}>
           <MaterialIcons name={flashModeToIcon[flash]} size={24} color={colors.white} />
